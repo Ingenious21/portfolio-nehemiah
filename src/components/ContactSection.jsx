@@ -22,9 +22,9 @@ export const ContactSection = () => {
   });
 
   // Replace these with your EmailJS credentials
-  const EMAILJS_SERVICE_ID = 'your_service_id';
-  const EMAILJS_TEMPLATE_ID = 'your_template_id';
-  const EMAILJS_PUBLIC_KEY = 'your_public_key';
+  const EMAILJS_SERVICE_ID = 'service_rkqvrdl';
+  const EMAILJS_TEMPLATE_ID = 'template_sms55af';
+  const EMAILJS_PUBLIC_KEY = 'Pw39MuRbIt6JWxiRy';
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
