@@ -8,18 +8,17 @@ export const StarBackground = () => {
 
   // Using SVG logos stored in /public/logos/
   const programmingIconsData = [
-    { name: "HTML", logo: "/logos/html5.svg" },
-    { name: "CSS", logo: "/logos/css.svg" },
-    { name: "JavaScript", logo: "/logos/javascript.svg" },
-    { name: "Python", logo: "/logos/python.svg" },
-    { name: "Django", logo: "/logos/django.svg" },
-    { name: "Node.js", logo: "/logos/nodedotjs.svg" },
-    { name: "React", logo: "/logos/react.svg" },
-    { name: "Excel", logo: "/logos/excel.svg" },
-    { name: "TypeScript", logo: "/logos/typescript.svg" },
-    { name: "Canva", logo: "/logos/canva.svg" },
-    { name: "Git", logo: "/logos/git.svg" },
-    { name: "GitHub", logo: "/logos/github.svg" },
+    { name: "HTML", logo: "\logos\html5.svg" },
+    { name: "CSS", logo: "\logos\css.svg" },
+    { name: "JavaScript", logo: "\logos\javascript.svg" },
+    { name: "Python", logo: "\logos\python.svg" },
+    { name: "Django", logo: "\logos\django.svg" },
+    { name: "Node.js", logo: "\logos\nodedotjs.svg" },
+    { name: "React", logo: "\logos\react.svg" },
+    { name: "TypeScript", logo: "\logos\typescript.svg" },
+    { name: "Canva", logo: "\logos\canva.svg" },
+    { name: "Git", logo: "\logos\git.svg" },
+    { name: "GitHub", logo: "\logos\github.svg" },
   ];
 
   const computeIsDark = () => {
