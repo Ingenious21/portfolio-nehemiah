@@ -21,10 +21,27 @@ export const StarBackground = () => {
     { name: "VS", symbol: "<>", color: "#007ACC" },
   ];
 
+  // Robust dark-mode detection: supports <html>, <body>, or any ancestor using the `dark` class.
+  const computeIsDark = () => {
+    const html = document.documentElement;
+    const body = document.body;
+
+    const hasExplicitClassMode =
+      html.classList.contains("dark") ||
+      html.classList.contains("light") ||
+      body?.classList.contains("dark") ||
+      body?.classList.contains("light");
+
+    const anyDarkClass = !!document.querySelector("html.dark, body.dark, .dark");
+
+    if (hasExplicitClassMode) return anyDarkClass;
+
+    // Fallback to OS preference only if no explicit class-based theme is present
+    return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+  };
+
   useEffect(() => {
-    const checkTheme = () => {
-      setIsDarkMode(document.documentElement.classList.contains("dark"));
-    };
+    const checkTheme = () => setIsDarkMode(computeIsDark());
 
     checkTheme();
     generateStars();
@@ -36,34 +53,41 @@ export const StarBackground = () => {
       generateProgrammingIcons();
     };
 
-    const observer = new MutationObserver(checkTheme);
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ["class"],
-    });
+    // Observe theme changes on both html and body
+    const htmlObserver = new MutationObserver(checkTheme);
+    const bodyObserver = new MutationObserver(checkTheme);
+    htmlObserver.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
+    if (document.body) bodyObserver.observe(document.body, { attributes: true, attributeFilter: ["class"] });
+
+    // React to OS-level changes as a fallback
+    const mql = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)");
+    const onMql = () => !document.querySelector(".dark, .light") && checkTheme();
+    if (mql?.addEventListener) mql.addEventListener("change", onMql);
 
     window.addEventListener("resize", handleResize);
 
     return () => {
       window.removeEventListener("resize", handleResize);
-      observer.disconnect();
+      htmlObserver.disconnect();
+      bodyObserver.disconnect();
+      if (mql?.removeEventListener) mql.removeEventListener("change", onMql);
     };
   }, []);
 
   const generateStars = () => {
-    const numberOfStars = Math.floor(
-      (window.innerWidth * window.innerHeight) / 10000
-    );
+    const numberOfStars = Math.floor((window.innerWidth * window.innerHeight) / 10000);
     const newStars = [];
 
     for (let i = 0; i < numberOfStars; i++) {
       newStars.push({
         id: i,
-        size: Math.random() * 3 + 1,
+        size: Math.random() * 2.5 + 1.5, // slightly larger for visibility
         x: Math.random() * 100,
         y: Math.random() * 100,
-        opacity: Math.random() * 0.5 + 0.5,
-        animationDuration: Math.random() * 4 + 2,
+        opacity: Math.random() * 0.4 + 0.6,
+        twinkle: Math.random() * 2 + 2, // 2–4s
+        float: Math.random() * 8 + 6, // 6–14s
+        delay: Math.random() * 5, // stagger
       });
     }
 
@@ -93,10 +117,7 @@ export const StarBackground = () => {
     const newIcons = [];
 
     for (let i = 0; i < numberOfIcons; i++) {
-      const iconData =
-        programmingIconsData[
-          Math.floor(Math.random() * programmingIconsData.length)
-        ];
+      const iconData = programmingIconsData[Math.floor(Math.random() * programmingIconsData.length)];
       newIcons.push({
         id: i,
         ...iconData,
@@ -105,8 +126,6 @@ export const StarBackground = () => {
         size: Math.random() * 30 + 40, // 40–70px
         opacity: Math.random() * 0.4 + 0.3, // 0.3–0.7 for better visibility
         animationDuration: Math.random() * 20 + 30, // Slow gliding
-        rotationSpeed: Math.random() * 10 + 5,
-        direction: Math.random() > 0.5 ? 1 : -1,
       });
     }
 
@@ -120,14 +139,17 @@ export const StarBackground = () => {
           {stars.map((star) => (
             <div
               key={star.id}
-              className="star animate-pulse-subtle"
+              className="star"
               style={{
                 width: star.size + "px",
                 height: star.size + "px",
                 left: star.x + "%",
                 top: star.y + "%",
                 opacity: star.opacity,
-                animationDuration: star.animationDuration + "s",
+                // Combine subtle twinkle with a gentle float to make stars feel alive
+                animation: `pulse-subtle ${star.twinkle}s ease-in-out ${star.delay}s infinite, float ${star.float}s ease-in-out ${star.delay / 2}s infinite`,
+                willChange: "transform, opacity",
+                zIndex: 1,
               }}
             />
           ))}
@@ -143,6 +165,7 @@ export const StarBackground = () => {
                 top: meteor.y + "%",
                 animationDelay: meteor.delay + "s",
                 animationDuration: meteor.animationDuration + "s",
+                zIndex: 2,
               }}
             />
           ))}
