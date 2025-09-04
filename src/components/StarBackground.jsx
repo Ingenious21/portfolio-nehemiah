@@ -39,11 +39,7 @@ export const StarBackground = () => {
   };
 
   useEffect(() => {
-    const checkTheme = () => {
-      const darkMode = computeIsDark();
-      console.log("Dark mode:", darkMode); // Debug log
-      setIsDarkMode(darkMode);
-    };
+    const checkTheme = () => setIsDarkMode(computeIsDark());
 
     checkTheme();
     generateStars();
@@ -129,12 +125,8 @@ export const StarBackground = () => {
       });
     }
 
-    console.log("Generated programming icons:", newIcons); // Debug log
     setProgrammingIcons(newIcons);
   };
-
-  // Debug: Log when icons should be visible
-  console.log("Component render - isDarkMode:", isDarkMode, "programmingIcons count:", programmingIcons.length);
 
   return (
     <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
@@ -177,29 +169,22 @@ export const StarBackground = () => {
 
       {!isDarkMode && (
         <>
-          {/* Debug: Add a visible indicator */}
-          <div style={{ position: 'absolute', top: '10px', left: '10px', zIndex: 1000, color: 'red', background: 'white', padding: '5px' }}>
-            Light mode: {programmingIcons.length} icons
-          </div>
-          
           {programmingIcons.map((icon) => (
-            <div key={icon.id} style={{ position: 'absolute', left: icon.x + "%", top: icon.y + "%" }}>
-              <img
-                src={icon.logo}
-                alt={icon.name}
-                className="programming-icon animate-float-programming"
-                style={{
-                  width: icon.size + "px",
-                  height: "auto",
-                  opacity: icon.opacity,
-                  animationDuration: icon.animationDuration + "s",
-                  animationDelay: Math.random() * 10 + "s",
-                  border: '2px solid red', // Debug border
-                }}
-                onLoad={() => console.log(`Loaded: ${icon.name} from ${icon.logo}`)}
-                onError={(e) => console.error(`Failed to load: ${icon.name} from ${icon.logo}`, e)}
-              />
-            </div>
+            <img
+              key={icon.id}
+              src={icon.logo}
+              alt={icon.name}
+              className="programming-icon"
+              style={{
+                left: icon.x + "%",
+                top: icon.y + "%",
+                width: icon.size + "px",
+                height: "auto",
+                opacity: icon.opacity,
+                animation: `float-programming ${icon.animationDuration}s linear infinite`,
+                animationDelay: Math.random() * 10 + "s",
+              }}
+            />
           ))}
         </>
       )}
