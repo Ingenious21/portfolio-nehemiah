@@ -6,19 +6,20 @@ export const StarBackground = () => {
   const [programmingIcons, setProgrammingIcons] = useState([]);
   const [isDarkMode, setIsDarkMode] = useState(false);
 
-const programmingIconsData = [
-  { name: "HTML", logo: "/logos/html5.svg" },
-  { name: "CSS", logo: "/logos/css.svg" },
-  { name: "JavaScript", logo: "/logos/javascript.svg" },
-  { name: "Python", logo: "/logos/python.svg" },
-  { name: "Django", logo: "/logos/django.svg" },
-  { name: "Node.js", logo: "/logos/nodedotjs.svg" },
-  { name: "React", logo: "/logos/react.svg" },
-  { name: "TypeScript", logo: "/logos/typescript.svg" },
-  { name: "Canva", logo: "/logos/canva.svg" },
-  { name: "Git", logo: "/logos/git.svg" },
-  { name: "GitHub", logo: "/logos/github.svg" },
-];
+  // Using SVG logos stored in /public/logos/
+  const programmingIconsData = [
+    { name: "HTML", logo: "/logos/html5.svg" },
+    { name: "CSS", logo: "/logos/css.svg" },
+    { name: "JavaScript", logo: "/logos/javascript.svg" },
+    { name: "Python", logo: "/logos/python.svg" },
+    { name: "Django", logo: "/logos/django.svg" },
+    { name: "Node.js", logo: "/logos/nodedotjs.svg" },
+    { name: "React", logo: "/logos/react.svg" },
+    { name: "TypeScript", logo: "/logos/typescript.svg" },
+    { name: "Canva", logo: "/logos/canva.svg" },
+    { name: "Git", logo: "/logos/git.svg" },
+    { name: "GitHub", logo: "/logos/github.svg" },
+  ];
 
   const computeIsDark = () => {
     const html = document.documentElement;
@@ -38,7 +39,11 @@ const programmingIconsData = [
   };
 
   useEffect(() => {
-    const checkTheme = () => setIsDarkMode(computeIsDark());
+    const checkTheme = () => {
+      const darkMode = computeIsDark();
+      console.log("Dark mode:", darkMode); // Debug log
+      setIsDarkMode(darkMode);
+    };
 
     checkTheme();
     generateStars();
@@ -124,8 +129,12 @@ const programmingIconsData = [
       });
     }
 
+    console.log("Generated programming icons:", newIcons); // Debug log
     setProgrammingIcons(newIcons);
   };
+
+  // Debug: Log when icons should be visible
+  console.log("Component render - isDarkMode:", isDarkMode, "programmingIcons count:", programmingIcons.length);
 
   return (
     <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
@@ -168,22 +177,29 @@ const programmingIconsData = [
 
       {!isDarkMode && (
         <>
+          {/* Debug: Add a visible indicator */}
+          <div style={{ position: 'absolute', top: '10px', left: '10px', zIndex: 1000, color: 'red', background: 'white', padding: '5px' }}>
+            Light mode: {programmingIcons.length} icons
+          </div>
+          
           {programmingIcons.map((icon) => (
-            <img
-              key={icon.id}
-              src={icon.logo}
-              alt={icon.name}
-              className="programming-icon animate-float-programming"
-              style={{
-                left: icon.x + "%",
-                top: icon.y + "%",
-                width: icon.size + "px",
-                height: "auto",
-                opacity: icon.opacity,
-                animationDuration: icon.animationDuration + "s",
-                animationDelay: Math.random() * 10 + "s",
-              }}
-            />
+            <div key={icon.id} style={{ position: 'absolute', left: icon.x + "%", top: icon.y + "%" }}>
+              <img
+                src={icon.logo}
+                alt={icon.name}
+                className="programming-icon animate-float-programming"
+                style={{
+                  width: icon.size + "px",
+                  height: "auto",
+                  opacity: icon.opacity,
+                  animationDuration: icon.animationDuration + "s",
+                  animationDelay: Math.random() * 10 + "s",
+                  border: '2px solid red', // Debug border
+                }}
+                onLoad={() => console.log(`Loaded: ${icon.name} from ${icon.logo}`)}
+                onError={(e) => console.error(`Failed to load: ${icon.name} from ${icon.logo}`, e)}
+              />
+            </div>
           ))}
         </>
       )}
