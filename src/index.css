@@ -186,9 +186,8 @@
   transform-style: preserve-3d;
   backface-visibility: hidden;
   will-change: transform, opacity;
-  pointer-events: none; /* ensure icons don’t block clicks */
+  pointer-events: none; /* ensure icons don't block clicks */
 }
-
 
 @utility star {
   @apply absolute rounded-full bg-white;
@@ -199,6 +198,47 @@
   @apply absolute rounded-full;
   background: linear-gradient(90deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0) 100%);
   box-shadow: 0 0 10px 5px rgba(255, 255, 255, 0.3);
+}
+
+/* Animation utility classes */
+@utility animate-float {
+  animation: var(--animate-float);
+}
+
+@utility animate-pulse-subtle {
+  animation: var(--animate-pulse-subtle);
+}
+
+@utility animate-fade-in {
+  animation: var(--animate-fade-in);
+}
+
+@utility animate-fade-in-delay-1 {
+  animation: var(--animate-fade-in-delay-1);
+}
+
+@utility animate-fade-in-delay-2 {
+  animation: var(--animate-fade-in-delay-2);
+}
+
+@utility animate-fade-in-delay-3 {
+  animation: var(--animate-fade-in-delay-3);
+}
+
+@utility animate-fade-in-delay-4 {
+  animation: var(--animate-fade-in-delay-4);
+}
+
+@utility animate-meteor {
+  animation: var(--animate-meteor);
+}
+
+@utility animate-float-programming {
+  animation: var(--animate-float-programming);
+}
+
+@utility animate-rotate-slow {
+  animation: var(--animate-rotate-slow);
 }
 
 #root {
