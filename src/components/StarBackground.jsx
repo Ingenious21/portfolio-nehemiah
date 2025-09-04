@@ -6,22 +6,22 @@ export const StarBackground = () => {
   const [programmingIcons, setProgrammingIcons] = useState([]);
   const [isDarkMode, setIsDarkMode] = useState(false);
 
+  // Using SVG logos stored in /public/logos/
   const programmingIconsData = [
-    { name: "HTML", symbol: "< />", color: "#E34F26" },
-    { name: "CSS", symbol: "{ }", color: "#1572B6" },
-    { name: "JS", symbol: "JS", color: "#F7DF1E" },
-    { name: "Python", symbol: "Py", color: "#3776AB" },
-    { name: "Django", symbol: "Dj", color: "#092E20" },
-    { name: "Node", symbol: "N", color: "#339933" },
-    { name: "React", symbol: "R", color: "#61DAFB" },
-    { name: "Excel", symbol: "XL", color: "#217346" },
-    { name: "PS", symbol: "Ps", color: "#31A8FF" },
-    { name: "Canva", symbol: "C", color: "#00C4CC" },
-    { name: "Git", symbol: "Git", color: "#F05032" },
-    { name: "VS", symbol: "<>", color: "#007ACC" },
+    { name: "HTML", logo: "/logos/html5.svg" },
+    { name: "CSS", logo: "/logos/css.svg" },
+    { name: "JavaScript", logo: "/logos/javascript.svg" },
+    { name: "Python", logo: "/logos/python.svg" },
+    { name: "Django", logo: "/logos/django.svg" },
+    { name: "Node.js", logo: "/logos/nodedotjs.svg" },
+    { name: "React", logo: "/logos/react.svg" },
+    { name: "Excel", logo: "/logos/excel.svg" },
+    { name: "TypeScript", logo: "/logos/typescript.svg" },
+    { name: "Canva", logo: "/logos/canva.svg" },
+    { name: "Git", logo: "/logos/git.svg" },
+    { name: "GitHub", logo: "/logos/github.svg" },
   ];
 
-  // Robust dark-mode detection: supports <html>, <body>, or any ancestor using the `dark` class.
   const computeIsDark = () => {
     const html = document.documentElement;
     const body = document.body;
@@ -36,7 +36,6 @@ export const StarBackground = () => {
 
     if (hasExplicitClassMode) return anyDarkClass;
 
-    // Fallback to OS preference only if no explicit class-based theme is present
     return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
   };
 
@@ -53,13 +52,11 @@ export const StarBackground = () => {
       generateProgrammingIcons();
     };
 
-    // Observe theme changes on both html and body
     const htmlObserver = new MutationObserver(checkTheme);
     const bodyObserver = new MutationObserver(checkTheme);
     htmlObserver.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
     if (document.body) bodyObserver.observe(document.body, { attributes: true, attributeFilter: ["class"] });
 
-    // React to OS-level changes as a fallback
     const mql = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)");
     const onMql = () => !document.querySelector(".dark, .light") && checkTheme();
     if (mql?.addEventListener) mql.addEventListener("change", onMql);
@@ -81,13 +78,13 @@ export const StarBackground = () => {
     for (let i = 0; i < numberOfStars; i++) {
       newStars.push({
         id: i,
-        size: Math.random() * 2.5 + 1.5, // slightly larger for visibility
+        size: Math.random() * 2.5 + 1.5,
         x: Math.random() * 100,
         y: Math.random() * 100,
         opacity: Math.random() * 0.4 + 0.6,
-        twinkle: Math.random() * 2 + 2, // 2–4s
-        float: Math.random() * 8 + 6, // 6–14s
-        delay: Math.random() * 5, // stagger
+        twinkle: Math.random() * 2 + 2,
+        float: Math.random() * 8 + 6,
+        delay: Math.random() * 5,
       });
     }
 
@@ -123,9 +120,9 @@ export const StarBackground = () => {
         ...iconData,
         x: Math.random() * 100,
         y: Math.random() * 100,
-        size: Math.random() * 30 + 40, // 40–70px
-        opacity: Math.random() * 0.4 + 0.3, // 0.3–0.7 for better visibility
-        animationDuration: Math.random() * 20 + 30, // Slow gliding
+        size: Math.random() * 30 + 40,
+        opacity: Math.random() * 0.4 + 0.3,
+        animationDuration: Math.random() * 20 + 30,
       });
     }
 
@@ -146,7 +143,6 @@ export const StarBackground = () => {
                 left: star.x + "%",
                 top: star.y + "%",
                 opacity: star.opacity,
-                // Combine subtle twinkle with a gentle float to make stars feel alive
                 animation: `pulse-subtle ${star.twinkle}s ease-in-out ${star.delay}s infinite, float ${star.float}s ease-in-out ${star.delay / 2}s infinite`,
                 willChange: "transform, opacity",
                 zIndex: 1,
@@ -175,21 +171,21 @@ export const StarBackground = () => {
       {!isDarkMode && (
         <>
           {programmingIcons.map((icon) => (
-            <div
+            <img
               key={icon.id}
+              src={icon.logo}
+              alt={icon.name}
               className="programming-icon animate-float-programming"
               style={{
                 left: icon.x + "%",
                 top: icon.y + "%",
-                fontSize: icon.size + "px",
-                color: icon.color,
+                width: icon.size + "px",
+                height: "auto",
                 opacity: icon.opacity,
                 animationDuration: icon.animationDuration + "s",
                 animationDelay: Math.random() * 10 + "s",
               }}
-            >
-              {icon.symbol}
-            </div>
+            />
           ))}
         </>
       )}
