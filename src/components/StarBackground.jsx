@@ -6,20 +6,20 @@ export const StarBackground = () => {
   const [programmingIcons, setProgrammingIcons] = useState([]);
   const [isDarkMode, setIsDarkMode] = useState(false);
 
-  // Fallback to emoji/text icons if SVGs don't exist
+  // Programming icons with their brand colors
   const programmingIconsData = [
-    { name: "HTML", logo: "/logos/html5.svg", fallback: "🌐" },
-    { name: "CSS", logo: "/logos/css.svg", fallback: "🎨" },
-    { name: "JavaScript", logo: "/logos/javascript.svg", fallback: "⚡" },
-    { name: "Python", logo: "/logos/python.svg", fallback: "🐍" },
-    { name: "Django", logo: "/logos/django.svg", fallback: "🎸" },
-    { name: "Node.js", logo: "/logos/nodedotjs.svg", fallback: "📗" },
-    { name: "React", logo: "/logos/react.svg", fallback: "⚛️" },
-    { name: "TypeScript", logo: "/logos/typescript.svg", fallback: "📘" },
-    { name: "Git", logo: "/logos/git.svg", fallback: "📝" },
-    { name: "GitHub", logo: "/logos/github.svg", fallback: "🐙" },
-    { name: "Database", logo: "/logos/database.svg", fallback: "🗄️" },
-    { name: "API", logo: "/logos/api.svg", fallback: "🔌" },
+    { name: "HTML", logo: "/logos/html5.svg", fallback: "🌐", color: "#E34F26" },
+    { name: "CSS", logo: "/logos/css.svg", fallback: "🎨", color: "#1572B6" },
+    { name: "JavaScript", logo: "/logos/javascript.svg", fallback: "⚡", color: "#F7DF1E" },
+    { name: "Python", logo: "/logos/python.svg", fallback: "🐍", color: "#3776AB" },
+    { name: "Django", logo: "/logos/django.svg", fallback: "🎸", color: "#092E20" },
+    { name: "Node.js", logo: "/logos/nodedotjs.svg", fallback: "📗", color: "#339933" },
+    { name: "React", logo: "/logos/react.svg", fallback: "⚛️", color: "#61DAFB" },
+    { name: "TypeScript", logo: "/logos/typescript.svg", fallback: "📘", color: "#3178C6" },
+    { name: "Git", logo: "/logos/git.svg", fallback: "📝", color: "#F05032" },
+    { name: "GitHub", logo: "/logos/github.svg", fallback: "🐙", color: "#181717" },
+    { name: "Database", logo: "/logos/database.svg", fallback: "🗄️", color: "#336791" },
+    { name: "API", logo: "/logos/api.svg", fallback: "🔌", color: "#6B73FF" },
   ];
 
   // Simplified dark mode detection that syncs with ThemeToggle
@@ -39,7 +39,6 @@ export const StarBackground = () => {
   useEffect(() => {
     const checkTheme = () => {
       const darkMode = computeIsDark();
-      console.log("Dark mode detected:", darkMode); // Debug log
       setIsDarkMode(darkMode);
     };
 
@@ -115,7 +114,16 @@ export const StarBackground = () => {
   };
 
   const generateProgrammingIcons = () => {
-    const numberOfIcons = 12;
+    // Adjust number of icons based on screen size
+    let numberOfIcons;
+    if (window.innerWidth < 640) {
+      numberOfIcons = 8; // Fewer icons on mobile
+    } else if (window.innerWidth < 1024) {
+      numberOfIcons = 10; // Medium number on tablets
+    } else {
+      numberOfIcons = 12; // Full number on desktop
+    }
+    
     const newIcons = [];
 
     for (let i = 0; i < numberOfIcons; i++) {
@@ -123,21 +131,20 @@ export const StarBackground = () => {
       newIcons.push({
         id: i,
         ...iconData,
-        x: Math.random() * 90 + 5, // Keep icons away from edges
+        x: Math.random() * 90 + 5,
         y: Math.random() * 90 + 5,
-        size: Math.random() * 25 + 35, // Slightly smaller for better performance
-        opacity: Math.random() * 0.3 + 0.4, // More visible
-        animationDuration: Math.random() * 15 + 25, // Faster animation
-        delay: Math.random() * 5, // Shorter delay
+        // Make size responsive based on screen width
+        size: Math.min(Math.max(window.innerWidth / 20, 20), 60),
+        opacity: Math.random() * 0.3 + 0.4,
+        animationDuration: Math.random() * 15 + 25,
+        delay: Math.random() * 5,
       });
     }
 
-    console.log("Generated programming icons:", newIcons); // Debug log
     setProgrammingIcons(newIcons);
   };
 
   const handleImageError = (icon, index) => {
-    console.log(`SVG failed to load: ${icon.name}, falling back to emoji`);
     // Update the specific icon to use fallback
     setProgrammingIcons(prev => 
       prev.map((item, idx) => 
@@ -146,20 +153,8 @@ export const StarBackground = () => {
     );
   };
 
-  // Debug logs
-  console.log("Component render:", { 
-    isDarkMode, 
-    iconsCount: programmingIcons.length,
-    starsCount: stars.length 
-  });
-
   return (
     <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
-      {/* Debug indicator */}
-      <div className="absolute top-20 left-4 z-10 bg-black/50 text-white p-2 rounded text-sm">
-        Mode: {isDarkMode ? "Dark" : "Light"} | Icons: {programmingIcons.length}
-      </div>
-
       {/* Dark Mode - Stars and Meteors */}
       {isDarkMode && (
         <>
@@ -218,6 +213,8 @@ export const StarBackground = () => {
                 justifyContent: "center",
                 fontSize: icon.useFallback ? (icon.size * 0.6) + "px" : "inherit",
                 zIndex: 1,
+                // Add a subtle filter to make SVGs more visible
+                filter: "drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2))",
               }}
             >
               {icon.useFallback ? (
@@ -225,17 +222,29 @@ export const StarBackground = () => {
                   {icon.fallback}
                 </span>
               ) : (
-                <img
-                  src={icon.logo}
-                  alt={icon.name}
+                <div 
                   style={{
                     width: "100%",
                     height: "100%",
-                    objectFit: "contain",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    color: icon.color, // Apply brand color
                   }}
-                  onError={() => handleImageError(icon, index)}
-                  onLoad={() => console.log(`SVG loaded: ${icon.name}`)}
-                />
+                >
+                  <img
+                    src={icon.logo}
+                    alt={icon.name}
+                    style={{
+                      width: "70%", // Slightly smaller to fit within container
+                      height: "70%",
+                      objectFit: "contain",
+                      // Apply color using CSS filter
+                      filter: `invert(8%) sepia(94%) saturate(4590%) hue-rotate(358deg) brightness(103%) contrast(108%)`,
+                    }}
+                    onError={() => handleImageError(icon, index)}
+                  />
+                </div>
               )}
             </div>
           ))}

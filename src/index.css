@@ -187,6 +187,22 @@
   backface-visibility: hidden;
   will-change: transform, opacity;
   pointer-events: none; /* ensure icons don't block clicks */
+  
+  /* Responsive sizing */
+  @media (max-width: 640px) {
+    width: 30px !important;
+    height: 30px !important;
+  }
+  
+  @media (min-width: 641px) and (max-width: 1024px) {
+    width: 40px !important;
+    height: 40px !important;
+  }
+}
+
+/* Add this new utility for colored SVGs */
+@utility colored-svg {
+  filter: brightness(0) saturate(100%) invert(1);
 }
 
 @utility star {
