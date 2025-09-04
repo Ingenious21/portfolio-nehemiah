@@ -174,14 +174,14 @@ export const StarBackground = () => {
               key={icon.id}
               src={icon.logo}
               alt={icon.name}
-              className="programming-icon"
+              className="programming-icon animate-float-programming"
               style={{
                 left: icon.x + "%",
                 top: icon.y + "%",
                 width: icon.size + "px",
                 height: "auto",
                 opacity: icon.opacity,
-                animation: `float-programming ${icon.animationDuration}s linear infinite`,
+                animationDuration: icon.animationDuration + "s",
                 animationDelay: Math.random() * 10 + "s",
               }}
             />
