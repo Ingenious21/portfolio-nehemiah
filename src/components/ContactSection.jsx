@@ -21,7 +21,7 @@ export const ContactSection = () => {
     message: ''
   });
 
-  // Replace these with your EmailJS credentials
+  // EmailJS credentials
   const EMAILJS_SERVICE_ID = 'service_rkqvrdl';
   const EMAILJS_TEMPLATE_ID = 'template_sms55af';
   const EMAILJS_PUBLIC_KEY = 'Pw39MuRbIt6JWxiRy';
