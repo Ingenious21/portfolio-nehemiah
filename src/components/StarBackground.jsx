@@ -6,7 +6,6 @@ export const StarBackground = () => {
   const [programmingIcons, setProgrammingIcons] = useState([]);
   const [isDarkMode, setIsDarkMode] = useState(false);
 
-  // Programming icons with their appropriate colors
   const programmingIconsData = [
     { name: "HTML", symbol: "< />", color: "#E34F26" },
     { name: "CSS", symbol: "{ }", color: "#1572B6" },
@@ -23,11 +22,10 @@ export const StarBackground = () => {
   ];
 
   useEffect(() => {
-    // Check theme
     const checkTheme = () => {
-      setIsDarkMode(document.documentElement.classList.contains('dark'));
+      setIsDarkMode(document.documentElement.classList.contains("dark"));
     };
-    
+
     checkTheme();
     generateStars();
     generateMeteors();
@@ -38,11 +36,10 @@ export const StarBackground = () => {
       generateProgrammingIcons();
     };
 
-    // Listen for theme changes
     const observer = new MutationObserver(checkTheme);
-    observer.observe(document.documentElement, { 
-      attributes: true, 
-      attributeFilter: ['class'] 
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
     });
 
     window.addEventListener("resize", handleResize);
@@ -57,7 +54,6 @@ export const StarBackground = () => {
     const numberOfStars = Math.floor(
       (window.innerWidth * window.innerHeight) / 10000
     );
-
     const newStars = [];
 
     for (let i = 0; i < numberOfStars; i++) {
@@ -97,15 +93,18 @@ export const StarBackground = () => {
     const newIcons = [];
 
     for (let i = 0; i < numberOfIcons; i++) {
-      const iconData = programmingIconsData[Math.floor(Math.random() * programmingIconsData.length)];
+      const iconData =
+        programmingIconsData[
+          Math.floor(Math.random() * programmingIconsData.length)
+        ];
       newIcons.push({
         id: i,
         ...iconData,
         x: Math.random() * 100,
         y: Math.random() * 100,
-        size: Math.random() * 20 + 30, // 30-50px
-        opacity: Math.random() * 0.3 + 0.1, // Very subtle in light mode
-        animationDuration: Math.random() * 20 + 30, // Slow movement
+        size: Math.random() * 30 + 40, // 40–70px
+        opacity: Math.random() * 0.4 + 0.3, // 0.3–0.7 for better visibility
+        animationDuration: Math.random() * 20 + 30, // Slow gliding
         rotationSpeed: Math.random() * 10 + 5,
         direction: Math.random() > 0.5 ? 1 : -1,
       });
@@ -116,7 +115,6 @@ export const StarBackground = () => {
 
   return (
     <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
-      {/* Show stars and meteors only in dark mode */}
       {isDarkMode && (
         <>
           {stars.map((star) => (
@@ -151,7 +149,6 @@ export const StarBackground = () => {
         </>
       )}
 
-      {/* Show programming icons only in light mode */}
       {!isDarkMode && (
         <>
           {programmingIcons.map((icon) => (
@@ -166,8 +163,6 @@ export const StarBackground = () => {
                 opacity: icon.opacity,
                 animationDuration: icon.animationDuration + "s",
                 animationDelay: Math.random() * 10 + "s",
-                "--rotation-speed": icon.rotationSpeed + "s",
-                "--direction": icon.direction,
               }}
             >
               {icon.symbol}
