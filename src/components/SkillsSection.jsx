@@ -41,7 +41,7 @@ export const SkillsSection = () => {
   );
   
   return (
-    <section id="skills" className="py-24 px-4 relative section-glass">
+    <section id="skills" className="py-24 px-4 relative sectionGlass">
       <div className="container mx-auto max-w-5xl">
         <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">
           My <span className="text-primary bg-gradient-to-r from-amber-500 to-orange-500 bg-clip-text text-transparent">Skills</span>
@@ -69,7 +69,7 @@ export const SkillsSection = () => {
           {filteredSkills.map((skill, key) => (
             <div
               key={key}
-              className="gradient-border p-6 card-hover group"
+              className="gradientBorder p-6 cardHover group"
             >
               <div className="text-left mb-4">
                 <h3 className="font-semibold text-lg text-foreground group-hover:text-primary transition-colors duration-300">
@@ -77,9 +77,9 @@ export const SkillsSection = () => {
                 </h3>
               </div>
               
-              <div className="w-full glass-progress h-3 mb-2">
+              <div className="w-full glassProgress h-3 mb-2">
                 <div
-                  className="glass-progress-fill h-full animate-[grow_1.5s_ease-out]"
+                  className="glassProgressFill h-full animate-[grow_1.5s_ease-out]"
                   style={{ width: skill.level + "%" }}
                 />
               </div>

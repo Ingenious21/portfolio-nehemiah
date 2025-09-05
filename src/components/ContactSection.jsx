@@ -89,7 +89,7 @@ export const ContactSection = () => {
   };
 
   return (
-    <section id="contact" className="py-24 px-4 relative section-glass">
+    <section id="contact" className="py-24 px-4 relative sectionGlass">
       <div className="container mx-auto max-w-5xl">
         <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center">
           Get In <span className="text-primary bg-gradient-to-r from-amber-500 to-orange-500 bg-clip-text text-transparent">Touch</span>
@@ -181,7 +181,7 @@ export const ContactSection = () => {
             </div>
           </div>
 
-          <div className="gradient-border p-8 card-hover">
+          <div className="gradientBorder p-8 cardHover">
             <h3 className="text-2xl font-semibold mb-6 text-foreground">Send a Message</h3>
 
             <form className="space-y-6" onSubmit={handleSubmit}>
@@ -200,7 +200,7 @@ export const ContactSection = () => {
                   onChange={handleInputChange}
                   required
                   disabled={isSubmitting}
-                  className="glass-input w-full px-4 py-3 rounded-md text-foreground placeholder:text-muted-foreground disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="glassInput w-full px-4 py-3 rounded-md text-foreground placeholder:text-muted-foreground disabled:opacity-50 disabled:cursor-not-allowed"
                   placeholder="Enter your name here..."
                 />
               </div>
@@ -220,7 +220,7 @@ export const ContactSection = () => {
                   onChange={handleInputChange}
                   required
                   disabled={isSubmitting}
-                  className="glass-input w-full px-4 py-3 rounded-md text-foreground placeholder:text-muted-foreground disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="glassInput w-full px-4 py-3 rounded-md text-foreground placeholder:text-muted-foreground disabled:opacity-50 disabled:cursor-not-allowed"
                   placeholder="example@gmail.com"
                 />
               </div>
@@ -240,7 +240,7 @@ export const ContactSection = () => {
                   required
                   disabled={isSubmitting}
                   rows={5}
-                  className="glass-input w-full px-4 py-3 rounded-md text-foreground placeholder:text-muted-foreground resize-none disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="glassInput w-full px-4 py-3 rounded-md text-foreground placeholder:text-muted-foreground resize-none disabled:opacity-50 disabled:cursor-not-allowed"
                   placeholder="Kindly type your message here..."
                 />
               </div>
@@ -249,7 +249,7 @@ export const ContactSection = () => {
                 type="submit"
                 disabled={isSubmitting}
                 className={cn(
-                  "cosmic-button w-full flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed group"
+                  "cosmicButton w-full flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed group"
                 )}
               >
                 {isSubmitting ? "Sending..." : "Send Message"}

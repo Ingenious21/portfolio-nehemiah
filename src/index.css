@@ -235,12 +235,12 @@
   }
 }
 
-@utility text-glow {
+@utility textGlow {
   @apply relative;
   text-shadow: 0 0 10px rgba(167, 139, 250, 1);
 }
 
-@utility card-hover {
+@utility cardHover {
   @apply transition-all duration-300 hover:scale-[1.01];
   background: var(--card);
   backdrop-filter: blur(16px);
@@ -251,13 +251,13 @@
   overflow: hidden;
 }
 
-@utility card-hover:hover {
+.cardHover:hover {
   transform: translateY(-4px) scale(1.01);
   box-shadow: var(--shadow-elevated);
   border-color: var(--border-accent);
 }
 
-@utility card-hover::before {
+.cardHover::before {
   content: '';
   position: absolute;
   top: 0;
@@ -272,11 +272,11 @@
   transition: opacity 0.3s ease;
 }
 
-@utility card-hover:hover::before {
+.cardHover:hover::before {
   opacity: 1;
 }
 
-@utility gradient-border {
+@utility gradientBorder {
   @apply relative rounded-md;
   background: var(--card);
   backdrop-filter: blur(16px);
@@ -287,7 +287,7 @@
   overflow: hidden;
 }
 
-.gradient-border::before {
+.gradientBorder::before {
   content: '';
   position: absolute;
   top: 0;
@@ -301,7 +301,7 @@
   opacity: 0.6;
 }
 
-@utility programming-icon {
+@utility programmingIcon {
   @apply absolute select-none flex items-center justify-center;
   transform-style: preserve-3d;
   backface-visibility: hidden;
@@ -342,7 +342,7 @@
 }
 
 /* Enhanced styling for dark-colored icons to ensure visibility in light mode */
-.programming-icon[data-dark-icon="true"] svg {
+.programmingIcon[data-dark-icon="true"] svg {
   filter: 
     drop-shadow(0 0 2px rgba(255, 255, 255, 0.9))
     drop-shadow(0 0 4px rgba(255, 255, 255, 0.7))
@@ -351,23 +351,23 @@
 }
 
 /* Additional glow effects for better visibility */
-.programming-icon svg {
+.programmingIcon svg {
   filter: 
     drop-shadow(0 0 4px rgba(0, 0, 0, 0.2))
     drop-shadow(0 0 8px rgba(255, 255, 255, 0.1));
 }
 
 /* Dark mode adjustments */
-.dark .programming-icon svg {
+.dark .programmingIcon svg {
   filter: 
     drop-shadow(0 0 4px rgba(255, 255, 255, 0.1))
     drop-shadow(0 0 8px rgba(0, 0, 0, 0.3));
 }
 
 /* Special handling for very dark icons in light mode */
-.programming-icon[data-color="#000000"] svg,
-.programming-icon[data-color="#181717"] svg,
-.programming-icon[data-color="#092E20"] svg {
+.programmingIcon[data-color="#000000"] svg,
+.programmingIcon[data-color="#181717"] svg,
+.programmingIcon[data-color="#092E20"] svg {
   filter: 
     drop-shadow(0 0 2px rgba(255, 255, 255, 1))
     drop-shadow(0 0 4px rgba(255, 255, 255, 0.8))
@@ -387,7 +387,7 @@
 }
 
 /* Enhanced Glass Effects for Sections */
-@utility section-glass {
+@utility sectionGlass {
   background: var(--card-subtle);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
@@ -396,7 +396,7 @@
 }
 
 /* Enhanced Form Elements */
-@utility glass-input {
+@utility glassInput {
   background: var(--card);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
@@ -404,7 +404,7 @@
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-@utility glass-input:focus {
+.glassInput:focus {
   outline: none;
   border-color: var(--border-glow);
   background: var(--card-elevated);
@@ -412,7 +412,7 @@
 }
 
 /* Enhanced Progress Bars */
-@utility glass-progress {
+@utility glassProgress {
   background: var(--card-subtle);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
@@ -422,14 +422,14 @@
   position: relative;
 }
 
-@utility glass-progress-fill {
+@utility glassProgressFill {
   background: var(--primary);
   border-radius: 20px;
   position: relative;
   box-shadow: 0 0 10px var(--primary-glow);
 }
 
-@utility glass-progress-fill::after {
+.glassProgressFill::after {
   content: '';
   position: absolute;
   top: 0;
@@ -444,47 +444,47 @@
 }
 
 /* Animation utility classes */
-@utility animate-float {
+@utility animateFloat {
   animation: var(--animate-float);
 }
 
-@utility animate-pulse-subtle {
+@utility animatePulseSubtle {
   animation: var(--animate-pulse-subtle);
 }
 
-@utility animate-fade-in {
+@utility animateFadeIn {
   animation: var(--animate-fade-in);
 }
 
-@utility animate-fade-in-delay-1 {
+@utility animateFadeInDelay1 {
   animation: var(--animate-fade-in-delay-1);
 }
 
-@utility animate-fade-in-delay-2 {
+@utility animateFadeInDelay2 {
   animation: var(--animate-fade-in-delay-2);
 }
 
-@utility animate-fade-in-delay-3 {
+@utility animateFadeInDelay3 {
   animation: var(--animate-fade-in-delay-3);
 }
 
-@utility animate-fade-in-delay-4 {
+@utility animateFadeInDelay4 {
   animation: var(--animate-fade-in-delay-4);
 }
 
-@utility animate-meteor {
+@utility animateMeteor {
   animation: var(--animate-meteor);
 }
 
-@utility animate-float-programming {
+@utility animateFloatProgramming {
   animation: var(--animate-float-programming);
 }
 
-@utility animate-rotate-slow {
+@utility animateRotateSlow {
   animation: var(--animate-rotate-slow);
 }
 
-@utility animate-shimmer {
+@utility animateShimmer {
   animation: var(--animate-shimmer);
 }
 
@@ -495,7 +495,7 @@
   text-align: center;
 }
 
-@utility cosmic-button {
+@utility cosmicButton {
   @apply text-primary-foreground font-semibold rounded-full px-8 py-3 border-0
          transition-all duration-300 hover:scale-105 active:scale-95;
   background: var(--primary);
@@ -504,7 +504,7 @@
   overflow: hidden;
 }
 
-@utility cosmic-button::before {
+.cosmicButton::before {
   content: '';
   position: absolute;
   top: 0;
@@ -518,28 +518,22 @@
   transition: left 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-@utility cosmic-button:hover {
+.cosmicButton:hover {
   transform: translateY(-2px) scale(1.02);
   box-shadow: 0 0 30px var(--primary-glow),
               0 0 60px hsla(36, 100%, 55%, 0.2),
               var(--shadow-elevated);
 }
 
-@utility cosmic-button:hover::before {
+.cosmicButton:hover::before {
   left: 100%;
 }
 
 /* Enhanced Navigation */
-@utility glass-nav {
+@utility glassNav {
   background: var(--card-subtle);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
   border-bottom: 1px solid var(--border);
   box-shadow: 0 4px 16px hsla(220, 30%, 20%, 0.06);
 }
-
-
-
-
-
-

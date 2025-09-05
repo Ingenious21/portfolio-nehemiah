@@ -49,7 +49,7 @@ export const ProjectsSection = () => {
           {projects.map((project, key) => (
             <div
               key={key}
-              className="group gradient-border rounded-lg overflow-hidden card-hover"
+              className="group gradientBorder rounded-lg overflow-hidden cardHover"
             >
               <div className="h-48 overflow-hidden relative">
                 <img
@@ -106,7 +106,7 @@ export const ProjectsSection = () => {
 
         <div className="text-center mt-12">
           <a
-            className="cosmic-button w-fit flex items-center mx-auto gap-2 group"
+            className="cosmicButton w-fit flex items-center mx-auto gap-2 group"
             target="_blank"
             rel="noopener noreferrer"
             href="https://github.com/Ingenious21"

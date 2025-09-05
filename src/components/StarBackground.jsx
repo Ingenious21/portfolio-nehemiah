@@ -200,7 +200,7 @@ export const StarBackground = () => {
           {stars.map((star) => (
             <div
               key={star.id}
-              className="star animate-pulse-subtle"
+              className="star animatePulseSubtle"
               style={{
                 width: star.size + "px",
                 height: star.size + "px",
@@ -215,7 +215,7 @@ export const StarBackground = () => {
           {meteors.map((meteor) => (
             <div
               key={meteor.id}
-              className="meteor animate-meteor"
+              className="meteor animateMeteor"
               style={{
                 width: meteor.size * 50 + "px",
                 height: meteor.size * 2 + "px",
@@ -235,7 +235,7 @@ export const StarBackground = () => {
           {programmingIcons.map((icon) => (
             <div
               key={icon.id}
-              className="programming-icon animate-float-programming"
+              className="programmingIcon animateFloatProgramming"
               style={{
                 left: icon.x + "%",
                 top: icon.y + "%",

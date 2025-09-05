@@ -28,7 +28,7 @@ export const Navbar = () => {
       className={cn(
         "fixed w-full z-40 transition-all duration-300",
         isScrolled 
-          ? "py-3 glass-nav shadow-xs" 
+          ? "py-3 glassNav shadow-xs" 
           : "py-5 bg-transparent"
       )}
     >
@@ -38,7 +38,7 @@ export const Navbar = () => {
           href="#hero"
         >
           <span className="relative z-10">
-            <span className="text-glow text-foreground"> IngeniousTech </span>{" "}
+            <span className="textGlow text-foreground"> IngeniousTech </span>{" "}
             Portfolio
           </span>
         </a>
@@ -67,7 +67,7 @@ export const Navbar = () => {
 
         <div
           className={cn(
-            "fixed inset-0 glass-nav z-40 flex flex-col items-center justify-center",
+            "fixed inset-0 glassNav z-40 flex flex-col items-center justify-center",
             "transition-all duration-300 md:hidden",
             isMenuOpen
               ? "opacity-100 pointer-events-auto"
