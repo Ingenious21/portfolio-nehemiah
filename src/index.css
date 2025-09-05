@@ -18,7 +18,7 @@
   --animate-fade-in-delay-3: fade-in 0.7s ease-out 0.6s forwards;
   --animate-fade-in-delay-4: fade-in 0.7s ease-out 0.8s forwards;
   --animate-meteor: meteor 5s linear infinite;
-  --animate-float-programming: float-programming 30s linear infinite;
+  --animate-float-programming: float-programming 35s linear infinite;
   --animate-rotate-slow: rotate-slow 20s linear infinite;
 
   @keyframes float {
@@ -30,7 +30,7 @@
       transform: translateY(-10px);
     }
   }
-
+  
   @keyframes pulse-subtle {
     0%,
     100% {
@@ -40,7 +40,7 @@
       opacity: 0.8;
     }
   }
-
+  
   @keyframes fade-in {
     from {
       opacity: 0;
@@ -51,7 +51,7 @@
       transform: translateY(0);
     }
   }
-
+  
   @keyframes meteor {
     0% {
       transform: rotate(215deg) translateX(0);
@@ -65,25 +65,37 @@
       opacity: 0;
     }
   }
-
+  
   @keyframes float-programming {
     0% {
-      transform: translateX(-150px) translateY(0) rotateZ(0deg) scale(1);
+      transform: translateX(-200px) translateY(0px) rotateZ(0deg) rotateY(0deg) scale(1);
+    }
+    12.5% {
+      transform: translateX(-100px) translateY(-60px) rotateZ(45deg) rotateY(45deg) scale(1.1);
     }
     25% {
-      transform: translateX(100px) translateY(-40px) rotateZ(60deg) scale(1.15);
+      transform: translateX(100px) translateY(-40px) rotateZ(90deg) rotateY(90deg) scale(0.9);
+    }
+    37.5% {
+      transform: translateX(200px) translateY(20px) rotateZ(135deg) rotateY(135deg) scale(1.05);
     }
     50% {
-      transform: translateX(200px) translateY(30px) rotateZ(120deg) scale(0.95);
+      transform: translateX(150px) translateY(80px) rotateZ(180deg) rotateY(180deg) scale(0.95);
+    }
+    62.5% {
+      transform: translateX(50px) translateY(60px) rotateZ(225deg) rotateY(225deg) scale(1.08);
     }
     75% {
-      transform: translateX(-100px) translateY(-50px) rotateZ(300deg) scale(1.1);
+      transform: translateX(-50px) translateY(-20px) rotateZ(270deg) rotateY(270deg) scale(0.92);
+    }
+    87.5% {
+      transform: translateX(-150px) translateY(-80px) rotateZ(315deg) rotateY(315deg) scale(1.12);
     }
     100% {
-      transform: translateX(-150px) translateY(0) rotateZ(360deg) scale(1);
+      transform: translateX(-200px) translateY(0px) rotateZ(360deg) rotateY(360deg) scale(1);
     }
   }
-
+  
   @keyframes rotate-slow {
     0% {
       transform: rotateZ(0deg);
@@ -180,29 +192,62 @@
 }
 
 @utility programming-icon {
-  @apply absolute select-none;
-  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.25))
-          drop-shadow(0 2px 6px rgba(0, 0, 0, 0.2));
+  @apply absolute select-none flex items-center justify-center;
   transform-style: preserve-3d;
   backface-visibility: hidden;
   will-change: transform, opacity;
-  pointer-events: none; /* ensure icons don't block clicks */
+  pointer-events: none;
+  
+  /* Enhanced 3D effects for SVGs */
+  filter: 
+    drop-shadow(0 8px 16px rgba(0, 0, 0, 0.3))
+    drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2))
+    drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+  
+  /* SVG styling */
+  svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+    
+    /* Ensure SVGs use their brand colors */
+    fill: currentColor;
+    
+    /* Add subtle glow effect matching the brand color */
+    filter: drop-shadow(0 0 8px currentColor);
+    
+    /* Smooth transitions */
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
   
   /* Responsive sizing */
   @media (max-width: 640px) {
-    width: 30px !important;
-    height: 30px !important;
+    width: 32px !important;
+    height: 32px !important;
   }
   
   @media (min-width: 641px) and (max-width: 1024px) {
-    width: 40px !important;
-    height: 40px !important;
+    width: 45px !important;
+    height: 45px !important;
+  }
+  
+  @media (min-width: 1025px) {
+    width: 55px !important;
+    height: 55px !important;
   }
 }
 
-/* Add this new utility for colored SVGs */
-@utility colored-svg {
-  filter: brightness(0) saturate(100%) invert(1);
+/* Special styling for dark-colored icons to ensure visibility in light mode */
+@utility programming-icon[style*="#000000"],
+@utility programming-icon[style*="#181717"],
+@utility programming-icon[style*="#092E20"] {
+  svg {
+    /* Add white outline for dark icons */
+    filter: 
+      drop-shadow(0 0 2px rgba(255, 255, 255, 0.8))
+      drop-shadow(0 0 4px rgba(255, 255, 255, 0.6))
+      drop-shadow(0 0 8px currentColor);
+  }
 }
 
 @utility star {
