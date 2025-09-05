@@ -20,6 +20,7 @@
   --animate-meteor: meteor 5s linear infinite;
   --animate-float-programming: float-programming 35s linear infinite;
   --animate-rotate-slow: rotate-slow 20s linear infinite;
+  --animate-shimmer: shimmer 2s infinite;
 
   @keyframes float {
     0%,
@@ -113,19 +114,76 @@
       transform: scaleX(1);
     }
   }
+
+  @keyframes shimmer {
+    0% { 
+      transform: translateX(-100%); 
+    }
+    100% { 
+      transform: translateX(100%); 
+    }
+  }
 }
 
 @layer base {
   :root {
-    --background: 204 50% 95%;
-    --foreground: 222 47% 11%;
+    /* Enhanced Futuristic Background System */
+    --background: linear-gradient(135deg, 
+      hsl(204, 65%, 97%) 0%,     /* Enhanced ethereal blue */
+      hsl(200, 55%, 95%) 15%,    /* Soft sky */
+      hsl(195, 45%, 93%) 35%,    /* Cool mist */
+      hsl(45, 65%, 96%) 65%,     /* Warm cream transition */
+      hsl(40, 70%, 94%) 85%,     /* Golden whisper */
+      hsl(204, 60%, 96%) 100%    /* Return to cool */
+    );
+    --foreground: hsla(222, 47%, 11%, 0.95);
 
-    --card: 0 0% 100%;
+    /* Glass Surface System */
+    --card: hsla(0, 0%, 100%, 0.4);
+    --card-elevated: hsla(0, 0%, 100%, 0.55);
+    --card-subtle: hsla(0, 0%, 100%, 0.25);
 
-    --primary: 36 100% 55%;
-    --primary-foreground: 180 50% 95%;
+    /* Enhanced Primary Colors with Gradients */
+    --primary: linear-gradient(135deg, 
+      hsl(38, 100%, 58%) 0%,     /* Enhanced amber */
+      hsl(35, 100%, 55%) 25%,    /* Core orange */
+      hsl(32, 95%, 52%) 50%,     /* Deep orange */
+      hsl(28, 90%, 55%) 75%,     /* Coral touch */
+      hsl(35, 100%, 58%) 100%    /* Back to amber */
+    );
+    --primary-foreground: hsl(0, 0%, 100%);
+    --primary-glow: hsla(36, 100%, 55%, 0.3);
 
-    --border: 180 52% 29%;
+    /* Enhanced Borders with Glass Effect */
+    --border: hsla(0, 0%, 100%, 0.35);
+    --border-accent: hsla(36, 100%, 55%, 0.4);
+    --border-glow: hsla(36, 100%, 55%, 0.6);
+
+    /* Futuristic Shadow System */
+    --shadow-glass: 0 8px 32px hsla(220, 30%, 20%, 0.08),
+                   0 4px 16px hsla(220, 25%, 25%, 0.06),
+                   0 2px 8px hsla(220, 20%, 30%, 0.04);
+    
+    --shadow-elevated: 0 16px 64px hsla(220, 30%, 15%, 0.12),
+                      0 8px 32px hsla(220, 25%, 20%, 0.08),
+                      0 4px 16px hsla(220, 20%, 25%, 0.06);
+    
+    --shadow-glow: 0 0 20px hsla(36, 100%, 55%, 0.3),
+                  0 0 40px hsla(36, 100%, 55%, 0.15),
+                  0 4px 16px hsla(36, 100%, 55%, 0.2);
+
+    /* Muted Colors Enhanced */
+    --muted: hsla(215, 25%, 45%, 0.15);
+    --muted-foreground: hsla(215, 25%, 45%, 0.85);
+
+    /* Secondary Colors Enhanced */
+    --secondary: hsla(0, 0%, 100%, 0.15);
+    --secondary-foreground: hsla(222, 47%, 11%, 0.8);
+
+    /* Accent Colors for Variety */
+    --accent-blue: linear-gradient(135deg, hsl(195, 100%, 65%) 0%, hsl(200, 95%, 60%) 100%);
+    --accent-cyan: linear-gradient(135deg, hsl(180, 100%, 70%) 0%, hsl(175, 95%, 65%) 100%);
+    --accent-purple: linear-gradient(135deg, hsl(260, 85%, 75%) 0%, hsl(255, 80%, 70%) 100%);
   }
 
   .dark {
@@ -151,6 +209,8 @@
   body {
     @apply bg-background text-foreground transition-colors duration-300;
     font-feature-settings: "rlig" 1, "calt" 1;
+    background: var(--background);
+    background-attachment: fixed;
   }
 }
 
@@ -181,14 +241,64 @@
 }
 
 @utility card-hover {
-  @apply transition-transform duration-300 hover:scale-[1.02] hover:shadow-lg;
+  @apply transition-all duration-300 hover:scale-[1.01];
+  background: var(--card);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-glass);
+  position: relative;
+  overflow: hidden;
+}
+
+@utility card-hover:hover {
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: var(--shadow-elevated);
+  border-color: var(--border-accent);
+}
+
+@utility card-hover::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    var(--border-glow) 50%,
+    transparent 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+@utility card-hover:hover::before {
+  opacity: 1;
 }
 
 @utility gradient-border {
   @apply relative rounded-md;
-  background: linear-gradient(to right, hsl(var(--card)), hsl(var(--card)));
-  background-clip: padding-box;
-  border: 1px solid transparent;
+  background: var(--card);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-glass);
+  position: relative;
+  overflow: hidden;
+}
+
+@utility gradient-border::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    var(--primary-glow) 50%,
+    transparent 100%);
+  opacity: 0.6;
 }
 
 @utility programming-icon {
@@ -209,8 +319,6 @@
     width: 100%;
     height: 100%;
     display: block;
-    
-    /* REMOVED: fill: currentColor; - this was overriding brand colors */
     
     /* Smooth transitions */
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -278,6 +386,63 @@
   box-shadow: 0 0 10px 5px rgba(255, 255, 255, 0.3);
 }
 
+/* Enhanced Glass Effects for Sections */
+@utility section-glass {
+  background: var(--card-subtle);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid hsla(0, 0%, 100%, 0.15);
+  border-radius: 24px;
+}
+
+/* Enhanced Form Elements */
+@utility glass-input {
+  background: var(--card);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@utility glass-input:focus {
+  outline: none;
+  border-color: var(--border-glow);
+  background: var(--card-elevated);
+  box-shadow: 0 0 0 3px var(--primary-glow), var(--shadow-glass);
+}
+
+/* Enhanced Progress Bars */
+@utility glass-progress {
+  background: var(--card-subtle);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid hsla(0, 0%, 100%, 0.2);
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+}
+
+@utility glass-progress-fill {
+  background: var(--primary);
+  border-radius: 20px;
+  position: relative;
+  box-shadow: 0 0 10px var(--primary-glow);
+}
+
+@utility glass-progress-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    hsla(0, 0%, 100%, 0.3) 50%,
+    transparent 100%);
+  animation: var(--animate-shimmer);
+}
+
 /* Animation utility classes */
 @utility animate-float {
   animation: var(--animate-float);
@@ -319,6 +484,10 @@
   animation: var(--animate-rotate-slow);
 }
 
+@utility animate-shimmer {
+  animation: var(--animate-shimmer);
+}
+
 #root {
   max-width: 100%;
   margin: 0 auto;
@@ -327,9 +496,44 @@
 }
 
 @utility cosmic-button {
-  @apply text-primary-foreground font-medium rounded-full px-6 py-2 border-[2px] 
-  border-[hsl(36,98%,59%)] transition-all duration-300 hover:scale-105 active:scale-95
-  hover:shadow-[0_0_10px_rgba(139,92,246,0.5)];
-  background-image: linear-gradient(180deg, hsl(43, 98%, 65%), hsl(36, 100%, 60%));
-  background-color: hsl(36, 98%, 59%);
+  @apply text-primary-foreground font-semibold rounded-full px-8 py-3 border-0
+         transition-all duration-300 hover:scale-105 active:scale-95;
+  background: var(--primary);
+  box-shadow: var(--shadow-glow);
+  position: relative;
+  overflow: hidden;
+}
+
+@utility cosmic-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    hsla(0, 0%, 100%, 0.4) 50%,
+    transparent 100%);
+  transition: left 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@utility cosmic-button:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 0 30px var(--primary-glow),
+              0 0 60px hsla(36, 100%, 55%, 0.2),
+              var(--shadow-elevated);
+}
+
+@utility cosmic-button:hover::before {
+  left: 100%;
+}
+
+/* Enhanced Navigation */
+@utility glass-nav {
+  background: var(--card-subtle);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 4px 16px hsla(220, 30%, 20%, 0.06);
 }

@@ -10,19 +10,18 @@ const skills = [
   { name: "Tailwind CSS", level: 90, category: "frontend" },
   { name: "Vite", level: 70, category: "frontend" },
   { name: "ShadCN UI", level: 70, category: "frontend" },
-//   { name: "Next.js", level: 80, category: "frontend" },
 
   // Backend
   { name: "Node.js", level: 80, category: "backend" },
   { name: "Express", level: 75, category: "backend" },
   { name: "MongoDB", level: 60, category: "backend" },
-  { name: "Dango", level: 90, category: "backend" },
+  { name: "Django", level: 90, category: "backend" },
   { name: "GraphQL", level: 50, category: "backend" },
 
   // Data Analysis
   { name: "Excel", level: 95, category: "data analysis" },
   { name: "Python", level: 75, category: "data analysis" },
-  { name: "Power Bi", level: 90, category: "data analysis" },
+  { name: "Power BI", level: 90, category: "data analysis" },
   { name: "Tableau", level: 80, category: "data analysis" },
 
   // Tools
@@ -30,7 +29,6 @@ const skills = [
   { name: "Docker", level: 60, category: "tools" },
   { name: "Figma", level: 85, category: "tools" },
   { name: "VS Code", level: 95, category: "tools" },
-  
 ];
 
 const categories = ["all", "frontend", "backend", "data analysis", "tools"];
@@ -41,11 +39,12 @@ export const SkillsSection = () => {
   const filteredSkills = skills.filter(
     (skill) => activeCategory === "all" || skill.category === activeCategory
   );
+  
   return (
-    <section id="skills" className="py-24 px-4 relative bg-secondary/30">
+    <section id="skills" className="py-24 px-4 relative section-glass">
       <div className="container mx-auto max-w-5xl">
         <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">
-          My <span className="text-primary"> Skills</span>
+          My <span className="text-primary bg-gradient-to-r from-amber-500 to-orange-500 bg-clip-text text-transparent">Skills</span>
         </h2>
 
         <div className="flex flex-wrap justify-center gap-4 mb-12">
@@ -54,10 +53,11 @@ export const SkillsSection = () => {
               key={key}
               onClick={() => setActiveCategory(category)}
               className={cn(
-                "px-5 py-2 rounded-full transition-colors duration-300 capitalize",
+                "px-6 py-3 rounded-full transition-all duration-300 capitalize font-medium",
+                "backdrop-filter backdrop-blur-md border",
                 activeCategory === category
-                  ? "bg-primary text-primary-foreground"
-                  : "bg-secondary/70 text-forefround hover:bd-secondary"
+                  ? "bg-gradient-to-r from-amber-500 to-orange-500 text-white border-amber-400 shadow-lg transform scale-105"
+                  : "bg-white/20 text-foreground hover:bg-white/30 border-white/30 hover:border-white/40 hover:scale-105"
               )}
             >
               {category}
@@ -69,20 +69,24 @@ export const SkillsSection = () => {
           {filteredSkills.map((skill, key) => (
             <div
               key={key}
-              className="bg-card p-6 rounded-lg shadow-xs card-hover"
+              className="gradient-border p-6 card-hover group"
             >
               <div className="text-left mb-4">
-                <h3 className="font-semibold text-lg"> {skill.name}</h3>
+                <h3 className="font-semibold text-lg text-foreground group-hover:text-primary transition-colors duration-300">
+                  {skill.name}
+                </h3>
               </div>
-              <div className="w-full bg-secondary/50 h-2 rounded-full overflow-hidden">
+              
+              <div className="w-full glass-progress h-3 mb-2">
                 <div
-                  className="bg-primary h-2 rounded-full origin-left animate-[grow_1.5s_ease-out]"
+                  className="glass-progress-fill h-full animate-[grow_1.5s_ease-out]"
                   style={{ width: skill.level + "%" }}
                 />
               </div>
 
-              <div className="text-right mt-1">
-                <span className="text-sm text-muted-foreground">
+              <div className="flex justify-between items-center text-sm">
+                <span className="text-muted-foreground font-medium">Proficiency</span>
+                <span className="text-foreground font-semibold">
                   {skill.level}%
                 </span>
               </div>

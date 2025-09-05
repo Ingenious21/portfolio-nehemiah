@@ -58,7 +58,7 @@ export const ContactSection = () => {
           from_name: formData.name,
           from_email: formData.email,
           message: formData.message,
-          to_email: 'ingeniouskemayah@gmail.com', // Your email
+          to_email: 'ingeniouskemayah@gmail.com',
         },
         EMAILJS_PUBLIC_KEY
       );
@@ -89,89 +89,106 @@ export const ContactSection = () => {
   };
 
   return (
-    <section id="contact" className="py-24 px-4 relative bg-secondary/30">
+    <section id="contact" className="py-24 px-4 relative section-glass">
       <div className="container mx-auto max-w-5xl">
         <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center">
-          Get In <span className="text-primary"> Touch</span>
+          Get In <span className="text-primary bg-gradient-to-r from-amber-500 to-orange-500 bg-clip-text text-transparent">Touch</span>
         </h2>
 
-        <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
+        <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto leading-relaxed">
           Have a project in mind or want to collaborate? Feel free to reach out.
           I'm always open to discussing new opportunities.
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           <div className="space-y-8">
-            <h3 className="text-2xl font-semibold mb-6">
+            <h3 className="text-2xl font-semibold mb-6 text-foreground">
               Contact Information
             </h3>
 
             <div className="space-y-6 justify-center">
-              <div className="flex items-start space-x-4">
-                <div className="p-3 rounded-full bg-primary/10">
+              <div className="flex items-start space-x-4 group">
+                <div className="p-3 rounded-full bg-primary/10 group-hover:bg-primary/20 transition-colors duration-300 backdrop-blur-sm border border-white/20">
                   <Mail className="h-6 w-6 text-primary" />
                 </div>
                 <div>
-                  <h4 className="font-medium"> Email</h4>
+                  <h4 className="font-medium text-foreground mb-1">Email</h4>
                   <a
                     href="mailto:ingeniouskemayah@gmail.com"
-                    className="text-muted-foreground hover:text-primary transition-colors"
+                    className="text-muted-foreground hover:text-primary transition-colors duration-300"
                   >
                     ingeniouskemayah@gmail.com
                   </a>
                 </div>
               </div>
-              <div className="flex items-start space-x-4">
-                <div className="p-3 rounded-full bg-primary/10">
+
+              <div className="flex items-start space-x-4 group">
+                <div className="p-3 rounded-full bg-primary/10 group-hover:bg-primary/20 transition-colors duration-300 backdrop-blur-sm border border-white/20">
                   <Phone className="h-6 w-6 text-primary" />
                 </div>
                 <div>
-                  <h4 className="font-medium"> Phone</h4>
+                  <h4 className="font-medium text-foreground mb-1">Phone</h4>
                   <a
                     href="tel:+231723830"
-                    className="text-muted-foreground hover:text-primary transition-colors"
+                    className="text-muted-foreground hover:text-primary transition-colors duration-300"
                   >
                     +231 (770) 723-830
                   </a>
                 </div>
               </div>
-              <div className="flex items-start space-x-4">
-                <div className="p-3 rounded-full bg-primary/10">
+
+              <div className="flex items-start space-x-4 group">
+                <div className="p-3 rounded-full bg-primary/10 group-hover:bg-primary/20 transition-colors duration-300 backdrop-blur-sm border border-white/20">
                   <MapPin className="h-6 w-6 text-primary" />
                 </div>
                 <div>
-                  <h4 className="font-medium"> Location</h4>
-                  <a className="text-muted-foreground hover:text-primary transition-colors">
+                  <h4 className="font-medium text-foreground mb-1">Location</h4>
+                  <span className="text-muted-foreground">
                     Paynesville, Montserrado, Liberia
-                  </a>
+                  </span>
                 </div>
               </div>
             </div>
 
             <div className="pt-8">
-              <h4 className="font-medium mb-4"> Connect With Me</h4>
+              <h4 className="font-medium mb-4 text-foreground">Connect With Me</h4>
               <div className="flex space-x-4 justify-center">
-                <a href="https://www.linkedin.com/in/nehemiah-kemayah?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" target="_blank" rel="noopener noreferrer">
-                  <Linkedin className="hover:text-primary transition-colors" />
+                <a 
+                  href="https://www.linkedin.com/in/nehemiah-kemayah?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="p-3 rounded-full bg-white/10 hover:bg-white/20 transition-all duration-300 backdrop-blur-sm border border-white/20 hover:border-primary/40 hover:scale-110 group"
+                >
+                  <Linkedin className="hover:text-primary transition-colors duration-300 group-hover:scale-110" />
                 </a>
-                <a href="https://x.com/handsome_breezy?s=21&t=mc1gK9CmYsqR2nAn7IlLng" target="_blank" rel="noopener noreferrer">
-                  <Twitter className="hover:text-primary transition-colors" />
+                <a 
+                  href="https://x.com/handsome_breezy?s=21&t=mc1gK9CmYsqR2nAn7IlLng" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="p-3 rounded-full bg-white/10 hover:bg-white/20 transition-all duration-300 backdrop-blur-sm border border-white/20 hover:border-primary/40 hover:scale-110 group"
+                >
+                  <Twitter className="hover:text-primary transition-colors duration-300 group-hover:scale-110" />
                 </a>
-                <a href="https://www.instagram.com/handsome_breezy_ingenious?igsh=cTZ3ZjZ4cnMzMWZ5&utm_source=qr" target="_blank" rel="noopener noreferrer">
-                  <Instagram className="hover:text-primary transition-colors" />
+                <a 
+                  href="https://www.instagram.com/handsome_breezy_ingenious?igsh=cTZ3ZjZ4cnMzMWZ5&utm_source=qr" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="p-3 rounded-full bg-white/10 hover:bg-white/20 transition-all duration-300 backdrop-blur-sm border border-white/20 hover:border-primary/40 hover:scale-110 group"
+                >
+                  <Instagram className="hover:text-primary transition-colors duration-300 group-hover:scale-110" />
                 </a>
               </div>
             </div>
           </div>
 
-          <div className="bg-card p-8 rounded-lg shadow-xs">
-            <h3 className="text-2xl font-semibold mb-6"> Send a Message</h3>
+          <div className="gradient-border p-8 card-hover">
+            <h3 className="text-2xl font-semibold mb-6 text-foreground">Send a Message</h3>
 
             <form className="space-y-6" onSubmit={handleSubmit}>
               <div>
                 <label
                   htmlFor="name"
-                  className="block text-sm font-medium mb-2"
+                  className="block text-sm font-medium mb-2 text-foreground"
                 >
                   Your Name
                 </label>
@@ -183,7 +200,7 @@ export const ContactSection = () => {
                   onChange={handleInputChange}
                   required
                   disabled={isSubmitting}
-                  className="w-full px-4 py-3 rounded-md border border-input bg-background focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="glass-input w-full px-4 py-3 rounded-md text-foreground placeholder:text-muted-foreground disabled:opacity-50 disabled:cursor-not-allowed"
                   placeholder="Enter your name here..."
                 />
               </div>
@@ -191,7 +208,7 @@ export const ContactSection = () => {
               <div>
                 <label
                   htmlFor="email"
-                  className="block text-sm font-medium mb-2"
+                  className="block text-sm font-medium mb-2 text-foreground"
                 >
                   Your Email
                 </label>
@@ -203,7 +220,7 @@ export const ContactSection = () => {
                   onChange={handleInputChange}
                   required
                   disabled={isSubmitting}
-                  className="w-full px-4 py-3 rounded-md border border-input bg-background focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="glass-input w-full px-4 py-3 rounded-md text-foreground placeholder:text-muted-foreground disabled:opacity-50 disabled:cursor-not-allowed"
                   placeholder="example@gmail.com"
                 />
               </div>
@@ -211,7 +228,7 @@ export const ContactSection = () => {
               <div>
                 <label
                   htmlFor="message"
-                  className="block text-sm font-medium mb-2"
+                  className="block text-sm font-medium mb-2 text-foreground"
                 >
                   Your Message
                 </label>
@@ -223,7 +240,7 @@ export const ContactSection = () => {
                   required
                   disabled={isSubmitting}
                   rows={5}
-                  className="w-full px-4 py-3 rounded-md border border-input bg-background focus:outline-none focus:ring-2 focus:ring-primary resize-none disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="glass-input w-full px-4 py-3 rounded-md text-foreground placeholder:text-muted-foreground resize-none disabled:opacity-50 disabled:cursor-not-allowed"
                   placeholder="Kindly type your message here..."
                 />
               </div>
@@ -232,11 +249,11 @@ export const ContactSection = () => {
                 type="submit"
                 disabled={isSubmitting}
                 className={cn(
-                  "cosmic-button w-full flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                  "cosmic-button w-full flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed group"
                 )}
               >
                 {isSubmitting ? "Sending..." : "Send Message"}
-                <Send size={16} />
+                <Send size={16} className="group-hover:translate-x-1 transition-transform duration-300" />
               </button>
             </form>
           </div>

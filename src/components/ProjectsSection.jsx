@@ -16,7 +16,7 @@ const projects = [
     description:
       "Will be up as soon as completed. Thank you for your understanding!",
     image: "/projects/project2.png",
-    tags: ["N/A",],
+    tags: ["N/A"],
     demoUrl: "#",
     githubUrl: "#",
   },
@@ -37,11 +37,10 @@ export const ProjectsSection = () => {
     <section id="projects" className="py-24 px-4 relative">
       <div className="container mx-auto max-w-5xl">
         <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center">
-          {" "}
-          Featured <span className="text-primary"> Projects </span>
+          Featured <span className="text-primary bg-gradient-to-r from-amber-500 to-orange-500 bg-clip-text text-transparent">Projects</span>
         </h2>
 
-        <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
+        <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto leading-relaxed">
           Here are some of my recent projects. Each project was carefully
           crafted with attention to detail, performance, and user experience.
         </p>
@@ -50,44 +49,53 @@ export const ProjectsSection = () => {
           {projects.map((project, key) => (
             <div
               key={key}
-              className="group bg-card rounded-lg overflow-hidden shadow-xs card-hover"
+              className="group gradient-border rounded-lg overflow-hidden card-hover"
             >
-              <div className="h-48 overflow-hidden">
+              <div className="h-48 overflow-hidden relative">
                 <img
                   src={project.image}
                   alt={project.title}
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                 />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </div>
 
               <div className="p-6">
                 <div className="flex flex-wrap gap-2 mb-4">
-                  {project.tags.map((tag) => (
-                    <span className="px-2 py-1 text-xs font-medium border rounded-full bg-secondary text-secondary-foreground">
+                  {project.tags.map((tag, index) => (
+                    <span
+                      key={index}
+                      className="px-3 py-1 text-xs font-medium border rounded-full bg-white/10 text-foreground/80 backdrop-blur-sm border-white/20 hover:bg-white/20 transition-colors duration-200"
+                    >
                       {tag}
                     </span>
                   ))}
                 </div>
 
-                <h3 className="text-xl font-semibold mb-1"> {project.title}</h3>
-                <p className="text-muted-foreground text-sm mb-4">
+                <h3 className="text-xl font-semibold mb-2 text-foreground group-hover:text-primary transition-colors duration-300">
+                  {project.title}
+                </h3>
+                <p className="text-muted-foreground text-sm mb-4 leading-relaxed">
                   {project.description}
                 </p>
+                
                 <div className="flex justify-between items-center">
                   <div className="flex space-x-3">
                     <a
                       href={project.demoUrl}
                       target="_blank"
-                      className="text-foreground/80 hover:text-primary transition-colors duration-300"
+                      rel="noopener noreferrer"
+                      className="p-2 rounded-full bg-white/10 hover:bg-white/20 text-foreground/80 hover:text-primary transition-all duration-300 backdrop-blur-sm border border-white/20 hover:border-primary/40 hover:scale-110"
                     >
-                      <ExternalLink size={20} />
+                      <ExternalLink size={18} />
                     </a>
                     <a
                       href={project.githubUrl}
                       target="_blank"
-                      className="text-foreground/80 hover:text-primary transition-colors duration-300"
+                      rel="noopener noreferrer"
+                      className="p-2 rounded-full bg-white/10 hover:bg-white/20 text-foreground/80 hover:text-primary transition-all duration-300 backdrop-blur-sm border border-white/20 hover:border-primary/40 hover:scale-110"
                     >
-                      <Github size={20} />
+                      <Github size={18} />
                     </a>
                   </div>
                 </div>
@@ -98,11 +106,13 @@ export const ProjectsSection = () => {
 
         <div className="text-center mt-12">
           <a
-            className="cosmic-button w-fit flex items-center mx-auto gap-2"
+            className="cosmic-button w-fit flex items-center mx-auto gap-2 group"
             target="_blank"
+            rel="noopener noreferrer"
             href="https://github.com/Ingenious21"
           >
-            Check My Github <ArrowRight size={16} />
+            Check My Github 
+            <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform duration-300" />
           </a>
         </div>
       </div>
