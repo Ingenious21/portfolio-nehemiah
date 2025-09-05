@@ -287,7 +287,7 @@
   overflow: hidden;
 }
 
-@utility gradient-border::before {
+.gradient-border::before {
   content: '';
   position: absolute;
   top: 0;
@@ -537,4 +537,9 @@
   border-bottom: 1px solid var(--border);
   box-shadow: 0 4px 16px hsla(220, 30%, 20%, 0.06);
 }
+
+
+
+
+
 
