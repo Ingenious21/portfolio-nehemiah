@@ -9,7 +9,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import emailjs from '@emailjs/browser';
 
 export const ContactSection = () => {
@@ -20,48 +20,90 @@ export const ContactSection = () => {
     email: '',
     message: ''
   });
+  const [formErrors, setFormErrors] = useState({});
 
   // EmailJS credentials
   const EMAILJS_SERVICE_ID = 'service_rkqvrdl';
   const EMAILJS_TEMPLATE_ID = 'template_sms55af';
   const EMAILJS_PUBLIC_KEY = 'Pw39MuRbIt6JWxiRy';
 
-  const handleInputChange = (e) => {
+  // Form validation
+  const validateForm = useCallback(() => {
+    const errors = {};
+    
+    if (!formData.name.trim()) {
+      errors.name = 'Name is required';
+    } else if (formData.name.trim().length < 2) {
+      errors.name = 'Name must be at least 2 characters';
+    }
+
+    if (!formData.email.trim()) {
+      errors.email = 'Email is required';
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim())) {
+      errors.email = 'Please enter a valid email address';
+    }
+
+    if (!formData.message.trim()) {
+      errors.message = 'Message is required';
+    } else if (formData.message.trim().length < 10) {
+      errors.message = 'Message must be at least 10 characters';
+    }
+
+    return errors;
+  }, [formData]);
+
+  const handleInputChange = useCallback((e) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
       [name]: value
     }));
-  };
+
+    // Clear error when user starts typing
+    if (formErrors[name]) {
+      setFormErrors(prev => ({
+        ...prev,
+        [name]: ''
+      }));
+    }
+  }, [formErrors]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Validate form
-    if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
+    
+    const errors = validateForm();
+    if (Object.keys(errors).length > 0) {
+      setFormErrors(errors);
       toast({
-        title: "Error",
-        description: "Please fill in all fields.",
+        title: "Validation Error",
+        description: "Please fix the errors below.",
         variant: "destructive"
       });
       return;
     }
 
     setIsSubmitting(true);
+    setFormErrors({});
 
     try {
-      // Send email using EmailJS
-      const result = await emailjs.send(
+      // Send email using EmailJS with timeout
+      const timeoutPromise = new Promise((_, reject) =>
+        setTimeout(() => reject(new Error('Request timeout')), 10000)
+      );
+
+      const emailPromise = emailjs.send(
         EMAILJS_SERVICE_ID,
         EMAILJS_TEMPLATE_ID,
         {
-          from_name: formData.name,
-          from_email: formData.email,
-          message: formData.message,
+          from_name: formData.name.trim(),
+          from_email: formData.email.trim(),
+          message: formData.message.trim(),
           to_email: 'ingeniouskemayah@gmail.com',
         },
         EMAILJS_PUBLIC_KEY
       );
+
+      const result = await Promise.race([emailPromise, timeoutPromise]);
 
       if (result.status === 200) {
         toast({
@@ -78,9 +120,19 @@ export const ContactSection = () => {
       }
     } catch (error) {
       console.error('EmailJS error:', error);
+      
+      let errorMessage = "Please try again or contact me directly via email.";
+      if (error.message === 'Request timeout') {
+        errorMessage = "Request timed out. Please check your connection and try again.";
+      } else if (error.status === 400) {
+        errorMessage = "Invalid form data. Please check your inputs.";
+      } else if (error.status === 403) {
+        errorMessage = "Service temporarily unavailable. Please try again later.";
+      }
+
       toast({
         title: "Failed to send message",
-        description: "Please try again or contact me directly via email.",
+        description: errorMessage,
         variant: "destructive"
       });
     } finally {
@@ -109,13 +161,14 @@ export const ContactSection = () => {
             <div className="space-y-6 justify-center">
               <div className="flex items-start space-x-4 group">
                 <div className="p-3 rounded-full bg-primary/10 group-hover:bg-primary/20 transition-colors duration-300 backdrop-blur-sm border border-white/20">
-                  <Mail className="h-6 w-6 text-primary" />
+                  <Mail className="h-6 w-6 text-primary" aria-hidden="true" />
                 </div>
                 <div>
                   <h4 className="font-medium text-foreground mb-1">Email</h4>
                   <a
                     href="mailto:ingeniouskemayah@gmail.com"
-                    className="text-muted-foreground hover:text-primary transition-colors duration-300"
+                    className="text-muted-foreground hover:text-primary transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 rounded"
+                    aria-label="Send email to ingeniouskemayah@gmail.com"
                   >
                     ingeniouskemayah@gmail.com
                   </a>
@@ -124,13 +177,14 @@ export const ContactSection = () => {
 
               <div className="flex items-start space-x-4 group">
                 <div className="p-3 rounded-full bg-primary/10 group-hover:bg-primary/20 transition-colors duration-300 backdrop-blur-sm border border-white/20">
-                  <Phone className="h-6 w-6 text-primary" />
+                  <Phone className="h-6 w-6 text-primary" aria-hidden="true" />
                 </div>
                 <div>
                   <h4 className="font-medium text-foreground mb-1">Phone</h4>
                   <a
-                    href="tel:+231723830"
-                    className="text-muted-foreground hover:text-primary transition-colors duration-300"
+                    href="tel:+231770723830"
+                    className="text-muted-foreground hover:text-primary transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 rounded"
+                    aria-label="Call +231 (770) 723-830"
                   >
                     +231 (770) 723-830
                   </a>
@@ -139,7 +193,7 @@ export const ContactSection = () => {
 
               <div className="flex items-start space-x-4 group">
                 <div className="p-3 rounded-full bg-primary/10 group-hover:bg-primary/20 transition-colors duration-300 backdrop-blur-sm border border-white/20">
-                  <MapPin className="h-6 w-6 text-primary" />
+                  <MapPin className="h-6 w-6 text-primary" aria-hidden="true" />
                 </div>
                 <div>
                   <h4 className="font-medium text-foreground mb-1">Location</h4>
@@ -157,25 +211,28 @@ export const ContactSection = () => {
                   href="https://www.linkedin.com/in/nehemiah-kemayah?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="p-3 rounded-full bg-white/10 hover:bg-white/20 transition-all duration-300 backdrop-blur-sm border border-white/20 hover:border-primary/40 hover:scale-110 group"
+                  className="p-3 rounded-full bg-white/10 hover:bg-white/20 transition-all duration-300 backdrop-blur-sm border border-white/20 hover:border-primary/40 hover:scale-110 group focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2"
+                  aria-label="Connect with me on LinkedIn"
                 >
-                  <Linkedin className="hover:text-primary transition-colors duration-300 group-hover:scale-110" />
+                  <Linkedin className="hover:text-primary transition-colors duration-300 group-hover:scale-110" aria-hidden="true" />
                 </a>
                 <a 
                   href="https://x.com/handsome_breezy?s=21&t=mc1gK9CmYsqR2nAn7IlLng" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="p-3 rounded-full bg-white/10 hover:bg-white/20 transition-all duration-300 backdrop-blur-sm border border-white/20 hover:border-primary/40 hover:scale-110 group"
+                  className="p-3 rounded-full bg-white/10 hover:bg-white/20 transition-all duration-300 backdrop-blur-sm border border-white/20 hover:border-primary/40 hover:scale-110 group focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2"
+                  aria-label="Follow me on Twitter/X"
                 >
-                  <Twitter className="hover:text-primary transition-colors duration-300 group-hover:scale-110" />
+                  <Twitter className="hover:text-primary transition-colors duration-300 group-hover:scale-110" aria-hidden="true" />
                 </a>
                 <a 
                   href="https://www.instagram.com/handsome_breezy_ingenious?igsh=cTZ3ZjZ4cnMzMWZ5&utm_source=qr" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="p-3 rounded-full bg-white/10 hover:bg-white/20 transition-all duration-300 backdrop-blur-sm border border-white/20 hover:border-primary/40 hover:scale-110 group"
+                  className="p-3 rounded-full bg-white/10 hover:bg-white/20 transition-all duration-300 backdrop-blur-sm border border-white/20 hover:border-primary/40 hover:scale-110 group focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2"
+                  aria-label="Follow me on Instagram"
                 >
-                  <Instagram className="hover:text-primary transition-colors duration-300 group-hover:scale-110" />
+                  <Instagram className="hover:text-primary transition-colors duration-300 group-hover:scale-110" aria-hidden="true" />
                 </a>
               </div>
             </div>
@@ -184,13 +241,13 @@ export const ContactSection = () => {
           <div className="gradientBorder p-8 cardHover">
             <h3 className="text-2xl font-semibold mb-6 text-foreground">Send a Message</h3>
 
-            <form className="space-y-6" onSubmit={handleSubmit}>
+            <form className="space-y-6" onSubmit={handleSubmit} noValidate>
               <div>
                 <label
                   htmlFor="name"
                   className="block text-sm font-medium mb-2 text-foreground"
                 >
-                  Your Name
+                  Your Name <span className="text-destructive" aria-label="required">*</span>
                 </label>
                 <input
                   type="text"
@@ -200,9 +257,19 @@ export const ContactSection = () => {
                   onChange={handleInputChange}
                   required
                   disabled={isSubmitting}
-                  className="glassInput w-full px-4 py-3 rounded-md text-foreground placeholder:text-muted-foreground disabled:opacity-50 disabled:cursor-not-allowed"
+                  className={cn(
+                    "glassInput w-full px-4 py-3 rounded-md text-foreground placeholder:text-muted-foreground disabled:opacity-50 disabled:cursor-not-allowed",
+                    formErrors.name && "border-destructive focus:border-destructive"
+                  )}
                   placeholder="Enter your name here..."
+                  aria-describedby={formErrors.name ? "name-error" : undefined}
+                  aria-invalid={formErrors.name ? "true" : "false"}
                 />
+                {formErrors.name && (
+                  <p id="name-error" className="text-destructive text-sm mt-1" role="alert">
+                    {formErrors.name}
+                  </p>
+                )}
               </div>
 
               <div>
@@ -210,7 +277,7 @@ export const ContactSection = () => {
                   htmlFor="email"
                   className="block text-sm font-medium mb-2 text-foreground"
                 >
-                  Your Email
+                  Your Email <span className="text-destructive" aria-label="required">*</span>
                 </label>
                 <input
                   type="email"
@@ -220,9 +287,19 @@ export const ContactSection = () => {
                   onChange={handleInputChange}
                   required
                   disabled={isSubmitting}
-                  className="glassInput w-full px-4 py-3 rounded-md text-foreground placeholder:text-muted-foreground disabled:opacity-50 disabled:cursor-not-allowed"
+                  className={cn(
+                    "glassInput w-full px-4 py-3 rounded-md text-foreground placeholder:text-muted-foreground disabled:opacity-50 disabled:cursor-not-allowed",
+                    formErrors.email && "border-destructive focus:border-destructive"
+                  )}
                   placeholder="example@gmail.com"
+                  aria-describedby={formErrors.email ? "email-error" : undefined}
+                  aria-invalid={formErrors.email ? "true" : "false"}
                 />
+                {formErrors.email && (
+                  <p id="email-error" className="text-destructive text-sm mt-1" role="alert">
+                    {formErrors.email}
+                  </p>
+                )}
               </div>
 
               <div>
@@ -230,7 +307,7 @@ export const ContactSection = () => {
                   htmlFor="message"
                   className="block text-sm font-medium mb-2 text-foreground"
                 >
-                  Your Message
+                  Your Message <span className="text-destructive" aria-label="required">*</span>
                 </label>
                 <textarea
                   id="message"
@@ -240,9 +317,19 @@ export const ContactSection = () => {
                   required
                   disabled={isSubmitting}
                   rows={5}
-                  className="glassInput w-full px-4 py-3 rounded-md text-foreground placeholder:text-muted-foreground resize-none disabled:opacity-50 disabled:cursor-not-allowed"
+                  className={cn(
+                    "glassInput w-full px-4 py-3 rounded-md text-foreground placeholder:text-muted-foreground resize-none disabled:opacity-50 disabled:cursor-not-allowed",
+                    formErrors.message && "border-destructive focus:border-destructive"
+                  )}
                   placeholder="Kindly type your message here..."
+                  aria-describedby={formErrors.message ? "message-error" : undefined}
+                  aria-invalid={formErrors.message ? "true" : "false"}
                 />
+                {formErrors.message && (
+                  <p id="message-error" className="text-destructive text-sm mt-1" role="alert">
+                    {formErrors.message}
+                  </p>
+                )}
               </div>
 
               <button
@@ -251,10 +338,24 @@ export const ContactSection = () => {
                 className={cn(
                   "cosmicButton w-full flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed group"
                 )}
+                aria-describedby="submit-status"
               >
-                {isSubmitting ? "Sending..." : "Send Message"}
-                <Send size={16} className="group-hover:translate-x-1 transition-transform duration-300" />
+                {isSubmitting ? (
+                  <>
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-current" aria-hidden="true" />
+                    Sending...
+                  </>
+                ) : (
+                  <>
+                    Send Message
+                    <Send size={16} className="group-hover:translate-x-1 transition-transform duration-300" aria-hidden="true" />
+                  </>
+                )}
               </button>
+              
+              <p id="submit-status" className="sr-only" aria-live="polite" aria-atomic="true">
+                {isSubmitting ? "Sending your message, please wait." : ""}
+              </p>
             </form>
           </div>
         </div>
