@@ -8,7 +8,8 @@ export const HeroSection = () => {
     >
       <div className="container max-w-4xl mx-auto text-center z-10">
         <div className="space-y-6">
-          <h1 className="text-4xl md:text-6xl font-bold tracking-tight">
+          {/* ✅ UPDATED: Smoother text scaling with more breakpoints */}
+          <h1 className="text-4xl sm:text-5xl md:text-5xl lg:text-6xl font-bold tracking-tight">
             <span className="opacity-0 animateFadeIn text-foreground">Hi, I'm</span>
             <span className="opacity-0 animateFadeInDelay1 bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 bg-clip-text text-transparent ml-2">
               Nehemiah
@@ -18,7 +19,8 @@ export const HeroSection = () => {
             </span>
           </h1>
 
-          <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto opacity-0 animateFadeInDelay3 leading-relaxed">
+          {/* ✅ UPDATED: Better paragraph text scaling */}
+          <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto opacity-0 animateFadeInDelay3 leading-relaxed">
             I'm a versatile Software Engineer with strong expertise in Web Development, 
             Data Analysis, Graphic Design, IT Consulting, and Academic/Technical Writing. 
             I thrive on solving real-world problems through clean code, smart data, compelling visuals, 
