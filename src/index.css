@@ -189,7 +189,7 @@
   }
 
   html {
-    scroll-smooth: smooth;
+    scroll-behavior: smooth;
   }
 
   body {
@@ -309,6 +309,10 @@
   will-change: transform, opacity;
   pointer-events: none;
   
+  /* ✅ UPDATED: Fluid responsive sizing with clamp() */
+  width: clamp(28px, 4vw, 60px) !important;
+  height: clamp(28px, 4vw, 60px) !important;
+  
   filter: 
     drop-shadow(0 8px 16px rgba(0, 0, 0, 0.3))
     drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2))
@@ -319,21 +323,6 @@
     height: 100%;
     display: block;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-  
-  @media (max-width: 640px) {
-    width: 32px !important;
-    height: 32px !important;
-  }
-  
-  @media (min-width: 641px) and (max-width: 1024px) {
-    width: 45px !important;
-    height: 45px !important;
-  }
-  
-  @media (min-width: 1025px) {
-    width: 55px !important;
-    height: 55px !important;
   }
 }
 
