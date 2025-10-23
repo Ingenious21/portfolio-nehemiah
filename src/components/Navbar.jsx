@@ -24,31 +24,50 @@ export const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // iOS Safari compatible scroll lock - prevents background scrolling when menu is open
+  // Improved iOS Safari compatible scroll lock - prevents jumping
   useEffect(() => {
     if (isMenuOpen) {
-      // Save current scroll position before locking
+      // Save current scroll position
       const scrollY = window.scrollY;
       
-      // Lock scroll using position:fixed (works on iOS Safari)
+      // Apply scroll lock styles
       document.body.style.position = 'fixed';
       document.body.style.top = `-${scrollY}px`;
+      document.body.style.left = '0';
+      document.body.style.right = '0';
       document.body.style.width = '100%';
+      
+      // Store scroll position for restoration
+      document.body.dataset.scrollY = String(scrollY);
+      
+      // Prevent body from being scrollable
       document.body.style.overflow = 'hidden';
       
-      // Store scroll position in dataset for later restoration
-      document.body.dataset.scrollY = scrollY;
+      // Also lock the html element for extra iOS support
+      document.documentElement.style.overflow = 'hidden';
+      
     } else {
-      // Restore scroll position when menu closes
+      // Get stored scroll position
       const scrollY = document.body.dataset.scrollY;
+      
+      // Remove all scroll lock styles
       document.body.style.position = '';
       document.body.style.top = '';
+      document.body.style.left = '';
+      document.body.style.right = '';
       document.body.style.width = '';
       document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
       
-      // Jump back to original scroll position
+      // Restore scroll position smoothly
       if (scrollY) {
-        window.scrollTo(0, parseInt(scrollY));
+        // Use requestAnimationFrame for smoother restoration
+        requestAnimationFrame(() => {
+          window.scrollTo({
+            top: parseInt(scrollY, 10),
+            behavior: 'instant' // Use instant instead of smooth to prevent animation issues
+          });
+        });
       }
     }
     
@@ -56,8 +75,11 @@ export const Navbar = () => {
     return () => {
       document.body.style.position = '';
       document.body.style.top = '';
+      document.body.style.left = '';
+      document.body.style.right = '';
       document.body.style.width = '';
       document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
     };
   }, [isMenuOpen]);
 
@@ -83,18 +105,22 @@ export const Navbar = () => {
   const handleNavClick = useCallback((href) => {
     setIsMenuOpen(false); // Close menu first
     
-    // Small delay for smooth close animation
+    // Slightly longer delay to allow scroll restoration to complete
     setTimeout(() => {
       const element = document.querySelector(href);
       if (element) {
-        // Check if browser supports smooth scroll, fallback if not
-        if ('scrollBehavior' in document.documentElement.style) {
-          element.scrollIntoView({ behavior: 'smooth' });
-        } else {
-          element.scrollIntoView(); // Instant scroll for older browsers
-        }
+        // Get the navbar height to offset the scroll
+        const navbarHeight = 80; // Approximate navbar height
+        const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+        const offsetPosition = elementPosition - navbarHeight;
+
+        // Smooth scroll to element with offset
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
       }
-    }, 100);
+    }, 150); // Increased delay for smoother transition
   }, []);
 
   // Toggle menu open/closed - useCallback prevents unnecessary re-renders
