@@ -21,6 +21,8 @@ export const ContactSection = () => {
     message: ''
   });
   const [formErrors, setFormErrors] = useState({});
+  // ✅ NEW: Track submission status for screen readers
+  const [submitStatus, setSubmitStatus] = useState('');
 
   // EmailJS credentials
   const EMAILJS_SERVICE_ID = 'service_rkqvrdl';
@@ -66,7 +68,12 @@ export const ContactSection = () => {
         [name]: ''
       }));
     }
-  }, [formErrors]);
+    
+    // Clear submit status when user modifies form
+    if (submitStatus) {
+      setSubmitStatus('');
+    }
+  }, [formErrors, submitStatus]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -74,6 +81,8 @@ export const ContactSection = () => {
     const errors = validateForm();
     if (Object.keys(errors).length > 0) {
       setFormErrors(errors);
+      // ✅ IMPROVED: Better screen reader announcement for validation errors
+      setSubmitStatus('Form has validation errors. Please review and correct the highlighted fields.');
       toast({
         title: "Validation Error",
         description: "Please fix the errors below.",
@@ -84,6 +93,8 @@ export const ContactSection = () => {
 
     setIsSubmitting(true);
     setFormErrors({});
+    // ✅ IMPROVED: Announce submitting state
+    setSubmitStatus('Sending your message, please wait...');
 
     try {
       // Send email using EmailJS with timeout
@@ -106,6 +117,9 @@ export const ContactSection = () => {
       const result = await Promise.race([emailPromise, timeoutPromise]);
 
       if (result.status === 200) {
+        // ✅ IMPROVED: Clear and detailed success announcement
+        setSubmitStatus('Success! Your message has been sent successfully. Thank you for reaching out. I will get back to you soon.');
+        
         toast({
           title: "Message sent successfully!",
           description: "Thank you for your message. I'll get back to you soon.",
@@ -129,6 +143,9 @@ export const ContactSection = () => {
       } else if (error.status === 403) {
         errorMessage = "Service temporarily unavailable. Please try again later.";
       }
+
+      // ✅ IMPROVED: Clear error announcement for screen readers
+      setSubmitStatus(`Error: Failed to send message. ${errorMessage}`);
 
       toast({
         title: "Failed to send message",
@@ -241,7 +258,17 @@ export const ContactSection = () => {
           <div className="gradientBorder p-8 cardHover">
             <h3 className="text-2xl font-semibold mb-6 text-foreground">Send a Message</h3>
 
-            <form className="space-y-6" onSubmit={handleSubmit} noValidate>
+            {/* ✅ IMPROVED: Better positioned, always-visible status region */}
+            <div 
+              role="status" 
+              aria-live="polite" 
+              aria-atomic="true"
+              className="sr-only"
+            >
+              {submitStatus}
+            </div>
+
+            <form className="space-y-6" onSubmit={handleSubmit} noValidate aria-label="Contact form">
               <div>
                 <label
                   htmlFor="name"
@@ -338,24 +365,19 @@ export const ContactSection = () => {
                 className={cn(
                   "cosmicButton w-full flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed group"
                 )}
-                aria-describedby="submit-status"
               >
                 {isSubmitting ? (
                   <>
                     <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-current" aria-hidden="true" />
-                    Sending...
+                    <span>Sending...</span>
                   </>
                 ) : (
                   <>
-                    Send Message
+                    <span>Send Message</span>
                     <Send size={16} className="group-hover:translate-x-1 transition-transform duration-300" aria-hidden="true" />
                   </>
                 )}
               </button>
-              
-              <p id="submit-status" className="sr-only" aria-live="polite" aria-atomic="true">
-                {isSubmitting ? "Sending your message, please wait." : ""}
-              </p>
             </form>
           </div>
         </div>
