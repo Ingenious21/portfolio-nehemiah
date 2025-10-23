@@ -212,7 +212,8 @@
 
 @utility container {
   margin-inline: auto;
-  padding-inline: 2rem;
+  /* ✅ UPDATED: Responsive padding - smaller on mobile, larger on desktop */
+  padding-inline: clamp(1rem, 5vw, 2rem);
 
   @media (width >= 640px) {
     max-width: 640px;
@@ -326,77 +327,72 @@
   }
 }
 
-/* Light theme specific fixes for programming icons */
+/* ===== OPTIMIZED LIGHT THEME ICON FILTERS ===== */
+
+/* Base light theme icons - Simplified filters for better performance */
 .light .programmingIcon svg {
   filter: 
-    drop-shadow(0 0 4px rgba(0, 0, 0, 0.3))
-    drop-shadow(0 0 8px rgba(0, 0, 0, 0.15))
-    drop-shadow(0 2px 6px rgba(0, 0, 0, 0.2));
+    drop-shadow(0 2px 4px rgba(0, 0, 0, 0.25))
+    drop-shadow(0 1px 2px rgba(0, 0, 0, 0.15));
 }
 
-/* Specific fixes for light-colored icons in light mode */
-.light .programmingIcon[data-color="#F7DF1E"] svg, /* JavaScript */
-.light .programmingIcon[data-color="#61DAFB"] svg, /* React */
-.light .programmingIcon[data-color="#E34F26"] svg, /* HTML5 */
-.light .programmingIcon[data-color="#1572B6"] svg { /* CSS3 */
-  filter: 
-    brightness(0.8)
-    contrast(1.3)
-    saturate(1.2)
-    drop-shadow(0 0 6px rgba(0, 0, 0, 0.5))
-    drop-shadow(0 0 12px rgba(0, 0, 0, 0.3))
-    drop-shadow(0 2px 8px rgba(0, 0, 0, 0.4));
-}
-
-/* Enhanced visibility for very light icons */
-.light .programmingIcon[data-color="#F7DF1E"] svg { /* JavaScript - Yellow */
-  filter: 
-    brightness(0.7)
-    contrast(1.4)
-    saturate(1.3)
-    hue-rotate(-5deg)
-    drop-shadow(0 0 8px rgba(0, 0, 0, 0.6))
-    drop-shadow(0 0 16px rgba(0, 0, 0, 0.4))
-    drop-shadow(0 3px 10px rgba(0, 0, 0, 0.5));
-}
-
-.light .programmingIcon[data-color="#61DAFB"] svg { /* React - Light Blue */
+/* Light-colored icons in light mode - Reduced filter complexity */
+.light .programmingIcon[data-color="#F7DF1E"] svg, /* JavaScript - Yellow */
+.light .programmingIcon[data-color="#61DAFB"] svg, /* React - Light Blue */
+.light .programmingIcon[data-color="#E34F26"] svg, /* HTML5 - Orange */
+.light .programmingIcon[data-color="#1572B6"] svg { /* CSS3 - Blue */
   filter: 
     brightness(0.75)
-    contrast(1.35)
-    saturate(1.25)
-    drop-shadow(0 0 8px rgba(0, 0, 0, 0.55))
-    drop-shadow(0 0 14px rgba(0, 0, 0, 0.35))
-    drop-shadow(0 3px 8px rgba(0, 0, 0, 0.45));
+    contrast(1.25)
+    saturate(1.15)
+    drop-shadow(0 2px 6px rgba(0, 0, 0, 0.4))
+    drop-shadow(0 1px 3px rgba(0, 0, 0, 0.25));
 }
 
-/* Dark icons in light mode get white glow for visibility */
-.light .programmingIcon[data-color="#000000"] svg, /* Express */
-.light .programmingIcon[data-color="#181717"] svg, /* GitHub */
-.light .programmingIcon[data-color="#092E20"] svg { /* Django */
+/* JavaScript icon - Most problematic, needs extra care */
+.light .programmingIcon[data-color="#F7DF1E"] svg {
   filter: 
-    drop-shadow(0 0 3px rgba(255, 255, 255, 1))
-    drop-shadow(0 0 6px rgba(255, 255, 255, 0.8))
-    drop-shadow(0 0 12px rgba(255, 255, 255, 0.6))
-    drop-shadow(0 2px 6px rgba(0, 0, 0, 0.3));
+    brightness(0.65)
+    contrast(1.3)
+    saturate(1.2)
+    drop-shadow(0 3px 6px rgba(0, 0, 0, 0.5))
+    drop-shadow(0 1px 3px rgba(0, 0, 0, 0.3));
 }
 
-/* Dark mode programming icon styling */
+/* React icon - Light blue needs good contrast */
+.light .programmingIcon[data-color="#61DAFB"] svg {
+  filter: 
+    brightness(0.7)
+    contrast(1.3)
+    saturate(1.2)
+    drop-shadow(0 2px 6px rgba(0, 0, 0, 0.45))
+    drop-shadow(0 1px 3px rgba(0, 0, 0, 0.3));
+}
+
+/* Dark icons in light mode - Simplified white glow */
+.light .programmingIcon[data-color="#000000"] svg, /* Express - Black */
+.light .programmingIcon[data-color="#181717"] svg, /* GitHub - Dark Gray */
+.light .programmingIcon[data-color="#092E20"] svg { /* Django - Dark Green */
+  filter: 
+    drop-shadow(0 0 4px rgba(255, 255, 255, 0.9))
+    drop-shadow(0 0 8px rgba(255, 255, 255, 0.6))
+    drop-shadow(0 2px 4px rgba(0, 0, 0, 0.25));
+}
+
+/* Dark mode icons - Keep simple for better performance */
 .dark .programmingIcon svg {
   filter: 
-    drop-shadow(0 0 4px rgba(255, 255, 255, 0.1))
-    drop-shadow(0 0 8px rgba(0, 0, 0, 0.3));
+    drop-shadow(0 2px 6px rgba(0, 0, 0, 0.3))
+    drop-shadow(0 1px 3px rgba(0, 0, 0, 0.2));
 }
 
-/* Dark icons in dark mode */
+/* Dark icons in dark mode - Simplified brightness boost */
 .dark .programmingIcon[data-color="#000000"] svg,
 .dark .programmingIcon[data-color="#181717"] svg,
 .dark .programmingIcon[data-color="#092E20"] svg {
   filter: 
-    brightness(1.2)
-    drop-shadow(0 0 2px rgba(255, 255, 255, 0.8))
-    drop-shadow(0 0 4px rgba(255, 255, 255, 0.6))
-    drop-shadow(0 0 8px rgba(255, 255, 255, 0.4))
+    brightness(1.3)
+    drop-shadow(0 0 6px rgba(255, 255, 255, 0.5))
     drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
 }
 
