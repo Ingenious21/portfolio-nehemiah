@@ -104,13 +104,13 @@ export const ThemeToggle = () => {
             onClick={toggleTheme} 
             disabled={isTransitioning}
             className={cn(
-                "fixed z-[70] p-2 sm:p-3 rounded-full",
+                "fixed z-[200] p-2 sm:p-3 rounded-full",
                 "transition-all duration-300 transform hover:scale-110 active:scale-95",
                 "focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2",
                 "backdrop-blur-md border border-white/20",
-                // Adjust position when mobile menu is open
+                // Better positioning logic - move left when mobile menu is open, stay in same vertical position
                 isNavMenuOpen 
-                    ? "top-4 right-16 sm:top-5 sm:right-5" 
+                    ? "top-3 right-[4.5rem] sm:top-5 sm:right-5" 
                     : "top-3 right-3 sm:top-5 sm:right-5",
                 isDarkMode 
                     ? "bg-gray-800/80 hover:bg-gray-700/80 text-yellow-300 shadow-lg" 
