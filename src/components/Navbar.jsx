@@ -113,7 +113,7 @@ export const Navbar = () => {
     >
       <div className="container flex items-center justify-between">
         {/* Logo/Brand */}
-        
+        <a
           className="text-xl font-bold text-primary flex items-center"
           href="#hero"
           onClick={(e) => {
@@ -130,7 +130,7 @@ export const Navbar = () => {
         {/* Desktop Navigation - hidden on mobile */}
         <div className="hidden md:flex space-x-8">
           {navItems.map((item, key) => (
-            
+            <a
               key={key}
               href={item.href}
               onClick={(e) => {
@@ -145,14 +145,14 @@ export const Navbar = () => {
           ))}
         </div>
 
-        {/* Mobile Menu Button - z-[150] keeps it above menu overlay */}
+        {/* Mobile Menu Button - z-[150] keeps it above menu overlay but below theme toggle */}
         <button
           onClick={handleMenuToggle}
           className={cn(
-            "md:hidden p-3 text-foreground z-[150] rounded-lg transition-colors",
+            "md:hidden p-3 text-foreground z-[150] relative rounded-lg transition-colors",
             "hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2",
-            "min-w-[44px] min-h-[44px] flex items-center justify-center", // 44px touch target for mobile
-            "active:scale-95 transition-transform" // Visual feedback on tap
+            "min-w-[44px] min-h-[44px] flex items-center justify-center",
+            "active:scale-95 transition-transform"
           )}
           aria-label={isMenuOpen ? "Close Menu" : "Open Menu"}
           aria-expanded={isMenuOpen}
@@ -169,7 +169,7 @@ export const Navbar = () => {
             "transition-all duration-300 md:hidden",
             isMenuOpen
               ? "opacity-100 pointer-events-auto backdrop-blur-xl"
-              : "opacity-0 pointer-events-none" // Hidden when closed
+              : "opacity-0 pointer-events-none"
           )}
           onClick={(e) => {
             // Close menu when clicking backdrop (not menu items)
@@ -184,7 +184,7 @@ export const Navbar = () => {
           <div className="flex flex-col space-y-8 text-xl">
             <h2 id="mobile-menu-title" className="sr-only">Navigation Menu</h2>
             {navItems.map((item, key) => (
-              
+              <a
                 key={key}
                 href={item.href}
                 onClick={(e) => {
@@ -194,11 +194,11 @@ export const Navbar = () => {
                 className={cn(
                   "text-foreground/80 hover:text-primary transition-colors duration-300 font-medium text-center",
                   "focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 rounded-md",
-                  "px-4 py-3 min-h-[44px] flex items-center justify-center", // 44px touch target
-                  "active:scale-95 transition-transform" // Visual feedback on tap
+                  "px-4 py-3 min-h-[44px] flex items-center justify-center",
+                  "active:scale-95 transition-transform"
                 )}
                 aria-label={`Navigate to ${item.name} section`}
-                tabIndex={isMenuOpen ? 0 : -1} // Only focusable when menu is open
+                tabIndex={isMenuOpen ? 0 : -1}
               >
                 {item.name}
               </a>
