@@ -524,6 +524,11 @@
   padding-right: 2rem;
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
+  /* ✅ ADDED: Minimum 44px touch target for mobile accessibility */
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   border: 0;
   transition: all 0.3s ease;
   background: hsl(var(--primary));
@@ -562,6 +567,16 @@
   box-shadow: 0 0 0 3px hsl(var(--primary) / 0.3),
               0 0 30px hsl(var(--primary) / 0.4),
               0 0 60px hsl(var(--primary) / 0.2);
+}
+
+/* ✅ NEW: Touch Target Utility - Ensures 44px minimum for accessibility */
+@utility touchTarget {
+  min-width: 44px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
 }
 
 @utility glassNav {

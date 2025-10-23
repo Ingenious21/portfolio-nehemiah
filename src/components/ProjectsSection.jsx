@@ -81,11 +81,13 @@ export const ProjectsSection = () => {
                 
                 <div className="flex justify-between items-center">
                   <div className="flex space-x-3">
+                    {/* ✅ UPDATED: Added min-w-[44px] min-h-[44px] for proper touch targets */}
                     <a
                       href={project.demoUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-2 rounded-full bg-white/10 hover:bg-white/20 text-foreground/80 hover:text-primary transition-all duration-300 backdrop-blur-sm border border-white/20 hover:border-primary/40 hover:scale-110"
+                      className="p-2 rounded-full bg-white/10 hover:bg-white/20 text-foreground/80 hover:text-primary transition-all duration-300 backdrop-blur-sm border border-white/20 hover:border-primary/40 hover:scale-110 min-w-[44px] min-h-[44px] flex items-center justify-center"
+                      aria-label={`View ${project.title} demo`}
                     >
                       <ExternalLink size={18} />
                     </a>
@@ -93,7 +95,8 @@ export const ProjectsSection = () => {
                       href={project.githubUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-2 rounded-full bg-white/10 hover:bg-white/20 text-foreground/80 hover:text-primary transition-all duration-300 backdrop-blur-sm border border-white/20 hover:border-primary/40 hover:scale-110"
+                      className="p-2 rounded-full bg-white/10 hover:bg-white/20 text-foreground/80 hover:text-primary transition-all duration-300 backdrop-blur-sm border border-white/20 hover:border-primary/40 hover:scale-110 min-w-[44px] min-h-[44px] flex items-center justify-center"
+                      aria-label={`View ${project.title} on GitHub`}
                     >
                       <Github size={18} />
                     </a>
@@ -110,6 +113,7 @@ export const ProjectsSection = () => {
             target="_blank"
             rel="noopener noreferrer"
             href="https://github.com/Ingenious21"
+            aria-label="View my GitHub profile"
           >
             Check My Github 
             <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform duration-300" />
